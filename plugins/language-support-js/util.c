@@ -17,9 +17,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 #include <libanjuta/anjuta-shell.h>
-#include <libanjuta/interfaces/ianjuta-indicable.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-session.h>
 
 #include "plugin.h"

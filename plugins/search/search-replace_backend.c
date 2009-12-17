@@ -45,11 +45,7 @@
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-encodings.h>
 #include <libanjuta/anjuta-convert.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-document.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /*
 #define GTK

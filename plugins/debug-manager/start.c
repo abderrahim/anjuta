@@ -36,10 +36,7 @@
 /*#define DEBUG*/
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/resources.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-builder.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-utils.h>
 
 #include <gconf/gconf-client.h>

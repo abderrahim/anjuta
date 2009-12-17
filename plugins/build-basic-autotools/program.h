@@ -22,8 +22,7 @@
 #define PROGRAM_H
 
 #include <glib.h>
-#include <libanjuta/interfaces/ianjuta-environment.h>
-#include <libanjuta/interfaces/ianjuta-builder.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 typedef struct _BuildProgram BuildProgram;
 

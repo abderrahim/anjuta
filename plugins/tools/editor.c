@@ -34,9 +34,7 @@
 #include "variable.h"
 
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <glib.h>
 #include <gdk/gdk.h>
 #include <gtk/gtk.h>

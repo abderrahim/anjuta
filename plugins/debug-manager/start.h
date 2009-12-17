@@ -23,7 +23,7 @@
 
 #include "plugin.h"
 
-#include <libanjuta/interfaces/ianjuta-debugger.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 typedef struct _DmaStart DmaStart;
 

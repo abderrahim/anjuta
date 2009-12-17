@@ -22,9 +22,7 @@
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/resources.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-todo.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 //#include <libgtodo/main.h>
 #include "main.h"

@@ -22,7 +22,7 @@
 #define __TOOLS_PLUGIN__
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-launcher.h>
 
 #include <gtk/gtk.h>

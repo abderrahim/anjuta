@@ -27,17 +27,7 @@
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-file-manager.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-markable.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
-#include <libanjuta/interfaces/ianjuta-iterable.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "plugin.h"
 #include "symbol-db-view.h"

@@ -32,8 +32,7 @@
 #include "svn-status-command.h"
 #include "svn-diff-command.h"
 #include <libanjuta/anjuta-vcs-status-tree-view.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 typedef struct
 {

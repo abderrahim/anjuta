@@ -19,7 +19,7 @@
 
 #include "sourceview-io.h"
 #include "sourceview-private.h"
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-convert.h>
 #include <libanjuta/anjuta-encodings.h>
 

@@ -27,8 +27,7 @@
 
 #include <glib-object.h>
 #include <libanjuta/anjuta-preferences.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 G_BEGIN_DECLS
 

@@ -113,7 +113,7 @@ select symbol_id_base, symbol.name from heritage
 #include <regex.h>
 
 #include <gio/gio.h>
-#include <libanjuta/interfaces/ianjuta-symbol.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-launcher.h>
 #include <libanjuta/anjuta-utils.h>

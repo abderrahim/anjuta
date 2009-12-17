@@ -30,11 +30,7 @@
 
 /*#define DEBUG*/
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-debugger-breakpoint.h>
-#include <libanjuta/interfaces/ianjuta-debugger-register.h>
-#include <libanjuta/interfaces/ianjuta-debugger-memory.h>
-#include <libanjuta/interfaces/ianjuta-debugger-instruction.h>
-#include <libanjuta/interfaces/ianjuta-debugger-variable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <gio/gio.h>
 

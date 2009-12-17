@@ -24,8 +24,7 @@
 #include <config.h>
 #include <libanjuta/anjuta-plugin.h>
 #include <libanjuta/anjuta-launcher.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <svn_client.h>
 
 extern GType subversion_get_type (GTypeModule *module);

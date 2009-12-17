@@ -31,11 +31,7 @@
 #include "variable.h"
 
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <glib/gi18n.h>
 #include <gio/gio.h>

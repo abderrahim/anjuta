@@ -26,7 +26,7 @@
 #define _GIT_VCS_INTERFACE_H_
 
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-vcs.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "git-add-command.h"
 #include "git-diff-command.h"

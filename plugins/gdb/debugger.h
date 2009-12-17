@@ -25,8 +25,7 @@
 #include <gtk/gtk.h>
 #include "gdbmi.h"
 
-#include <libanjuta/interfaces/ianjuta-message-view.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 G_BEGIN_DECLS
 

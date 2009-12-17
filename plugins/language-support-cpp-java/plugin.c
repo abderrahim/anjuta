@@ -23,19 +23,7 @@
 #include <stdlib.h>
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-iterable.h>
-#include <libanjuta/interfaces/ianjuta-document.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-editor-cell.h>
-#include <libanjuta/interfaces/ianjuta-editor-language.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
-#include <libanjuta/interfaces/ianjuta-editor-tip.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
-#include <libanjuta/interfaces/ianjuta-symbol.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "plugin.h"
 #include "cpp-java-utils.h"

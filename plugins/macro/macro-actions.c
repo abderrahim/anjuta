@@ -15,7 +15,7 @@
  *  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
  */
 
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "macro-actions.h"
 #include "macro-db.h"
 #include "macro-dialog.h"

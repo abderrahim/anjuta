@@ -18,7 +18,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 
-#include <libanjuta/interfaces/ianjuta-editor-cell.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "cpp-java-utils.h"
 

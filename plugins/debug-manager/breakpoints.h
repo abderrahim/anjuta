@@ -25,8 +25,7 @@
 
 #include <stdio.h>
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /* Stock icons */
 #define ANJUTA_STOCK_BREAKPOINT_TOGGLE			"gdb-breakpoint-toggle"

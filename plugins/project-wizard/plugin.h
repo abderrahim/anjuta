@@ -22,7 +22,7 @@
 #define __PROJECT_WIZARD_PLUGIN__
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-preferences.h>
 
 extern GType npw_plugin_get_type (GTypeModule *module);

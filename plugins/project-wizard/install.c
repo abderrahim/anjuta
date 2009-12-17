@@ -33,7 +33,7 @@
 #include "autogen.h"
 #include "action.h"
 
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-launcher.h>
 #include <libanjuta/anjuta-debug.h>
 

@@ -45,7 +45,7 @@
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-encodings.h>
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "anjuta-view.h"
 #include "sourceview.h"

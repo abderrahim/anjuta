@@ -27,18 +27,13 @@
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/anjuta-plugin.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
-#include <libanjuta/interfaces/ianjuta-message-view.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-markable.h>
-#include <libanjuta/interfaces/ianjuta-indicable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "search-replace_backend.h"
 #include "search-replace.h"
 #include "search_preferences.h"
 
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <glib/gi18n.h>
 
 #define BUILDER_FILE_SEARCH_REPLACE PACKAGE_DATA_DIR"/glade/anjuta-search.ui"

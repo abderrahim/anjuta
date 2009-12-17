@@ -22,11 +22,7 @@
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/anjuta-preferences.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-markable.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-editor-factory.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <stdlib.h>
 #include <gtk/gtk.h>

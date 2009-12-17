@@ -20,8 +20,7 @@
 #include "macro-db.h"
 
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-macro.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #define UI_FILE PACKAGE_DATA_DIR"/ui/anjuta-macro.xml"
 #define ICON_FILE "anjuta-macro.png"

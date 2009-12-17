@@ -21,7 +21,7 @@
 #include "configuration-list.h"
 
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-builder.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <glib/gi18n.h>
 #include <gio/gio.h>
 #include <string.h>

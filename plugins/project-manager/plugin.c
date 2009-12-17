@@ -19,14 +19,7 @@
 */
 
 #include <config.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-file-manager.h>
-#include <libanjuta/interfaces/ianjuta-builder.h>
-#include <libanjuta/interfaces/ianjuta-project-backend.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-profile-manager.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-status.h>

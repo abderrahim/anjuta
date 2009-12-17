@@ -23,8 +23,7 @@
 
 #include "utilities.h"
 
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <glib.h>
 

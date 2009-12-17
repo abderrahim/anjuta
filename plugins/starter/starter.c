@@ -21,9 +21,7 @@
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/resources.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
-#include <libanjuta/interfaces/ianjuta-wizard.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "starter.h"
 #include <gio/gio.h>

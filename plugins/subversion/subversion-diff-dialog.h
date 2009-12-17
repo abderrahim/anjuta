@@ -30,8 +30,7 @@
 
 #include "subversion-ui-utils.h"
 #include "svn-diff-command.h"
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 void on_menu_subversion_diff (GtkAction* action, Subversion* plugin);
 void on_fm_subversion_diff (GtkAction *action, Subversion *plugin);

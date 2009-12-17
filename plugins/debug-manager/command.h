@@ -25,8 +25,7 @@
 
 #include "plugin.h"
 
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-debugger-register.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <glib.h>
 

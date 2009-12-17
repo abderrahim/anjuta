@@ -21,9 +21,7 @@
 #include "cvs-execute.h"
 #include "plugin.h"
 
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-launcher.h>
 #include <libanjuta/anjuta-debug.h>
 

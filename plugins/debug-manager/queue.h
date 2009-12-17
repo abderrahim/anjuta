@@ -28,8 +28,7 @@
 #include "command.h"
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-debugger-breakpoint.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <glib.h>
 

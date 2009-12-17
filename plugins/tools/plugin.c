@@ -97,7 +97,7 @@ R7: Tool Storage
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
 
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /*---------------------------------------------------------------------------*/
 

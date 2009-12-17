@@ -18,7 +18,7 @@
  
 #include <libanjuta/anjuta-launcher.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "plugin.h"
 #include "patch-plugin.h"

@@ -27,11 +27,7 @@
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-preferences.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
-#include <libanjuta/interfaces/ianjuta-file-manager.h>
-#include <libanjuta/interfaces/ianjuta-vcs.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "plugin.h"
 
 #define UI_FILE PACKAGE_DATA_DIR"/ui/file-manager.xml"

@@ -21,10 +21,7 @@
 
 #include "anjuta-bookmarks.h"
 #include "anjuta-docman.h"
-#include <libanjuta/interfaces/ianjuta-markable.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-debug.h>
 #include <gtk/gtk.h>
 #include <gio/gio.h>

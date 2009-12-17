@@ -22,7 +22,7 @@
 #include <config.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/gbf-project.h>
-#include <libanjuta/interfaces/ianjuta-project-backend.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "plugin.h"
 #include "gbf-mkfile-project.h"

@@ -19,8 +19,7 @@
 */
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "cpp-java-assist.h"
 
 extern GType cpp_java_plugin_get_type (GTypeModule *module);

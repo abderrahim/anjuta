@@ -26,8 +26,7 @@ G_BEGIN_DECLS
 #include "plugin.h"
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-debugger-memory.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 typedef struct _DmaMemory DmaMemory;
 

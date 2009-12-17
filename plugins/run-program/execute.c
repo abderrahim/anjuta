@@ -27,8 +27,7 @@
 #include "execute.h"
 
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-terminal.h>
-#include <libanjuta/interfaces/ianjuta-builder.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <signal.h>
 

@@ -26,9 +26,7 @@
 #define GIT_UI_UTILS_H
 
 #include <libanjuta/anjuta-vcs-status-tree-view.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "plugin.h"
 #include "git-status-command.h"
 #include "git-diff-command.h"

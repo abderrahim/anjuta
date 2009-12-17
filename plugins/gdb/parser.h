@@ -26,7 +26,7 @@
 
 #include "gdbmi.h"
 
-#include <libanjuta/interfaces/ianjuta-debugger.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 G_BEGIN_DECLS
 

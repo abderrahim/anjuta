@@ -36,7 +36,7 @@
 
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-wizard.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <stdlib.h>
 #include <glib/gi18n.h>
 #include <glib.h>

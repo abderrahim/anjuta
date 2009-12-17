@@ -27,8 +27,7 @@
 
 #include <libanjuta/anjuta-async-command.h>
 #include <libanjuta/anjuta-async-notify.h>
-#include <libanjuta/interfaces/ianjuta-iterable.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 void
 isymbol_manager_iface_init (IAnjutaSymbolManagerIface *iface);

@@ -21,14 +21,7 @@
 #include <config.h>
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-debugger-breakpoint.h>
-#include <libanjuta/interfaces/ianjuta-debugger-register.h>
-#include <libanjuta/interfaces/ianjuta-debugger-memory.h>
-#include <libanjuta/interfaces/ianjuta-debugger-instruction.h>
-#include <libanjuta/interfaces/ianjuta-debugger-variable.h>
-#include <libanjuta/interfaces/ianjuta-terminal.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-plugin.h>
 #include "plugin.h"
 #include "debugger-js.h"

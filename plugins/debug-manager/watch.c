@@ -27,9 +27,7 @@
 
 #include <glib/gi18n.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /* Type
  *---------------------------------------------------------------------------*/

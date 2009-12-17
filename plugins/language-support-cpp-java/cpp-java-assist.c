@@ -28,14 +28,7 @@
 #include <ctype.h>
 #include <string.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-editor-cell.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
-#include <libanjuta/interfaces/ianjuta-editor-tip.h>
-#include <libanjuta/interfaces/ianjuta-provider.h>
-#include <libanjuta/interfaces/ianjuta-document.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "cpp-java-assist.h"
 #include "cpp-java-utils.h"
 

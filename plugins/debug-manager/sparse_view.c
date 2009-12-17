@@ -28,7 +28,7 @@
 
 /*#define DEBUG*/
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-markable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <glib/gi18n.h>
 

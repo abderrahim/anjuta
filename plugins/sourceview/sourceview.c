@@ -27,23 +27,7 @@
 #include <libanjuta/anjuta-preferences.h>
 #include <libanjuta/anjuta-encodings.h>
 #include <libanjuta/anjuta-shell.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
-#include <libanjuta/interfaces/ianjuta-markable.h>
-#include <libanjuta/interfaces/ianjuta-indicable.h>
-#include <libanjuta/interfaces/ianjuta-print.h>
-#include <libanjuta/interfaces/ianjuta-language-support.h>
-#include <libanjuta/interfaces/ianjuta-document.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
-#include <libanjuta/interfaces/ianjuta-editor-tip.h>
-#include <libanjuta/interfaces/ianjuta-editor-convert.h>
-#include <libanjuta/interfaces/ianjuta-editor-language.h>
-#include <libanjuta/interfaces/ianjuta-editor-search.h>
-#include <libanjuta/interfaces/ianjuta-editor-hover.h>
-#include <libanjuta/interfaces/ianjuta-provider.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <gtksourceview/gtksourceview.h>
 #include <gtksourceview/gtksourcelanguage.h>

@@ -27,8 +27,7 @@
 
 #include <glib-object.h>
 #include <glib.h>
-#include <libanjuta/interfaces/ianjuta-symbol.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-plugin.h>
 #include "symbol-db-engine-iterator.h"
 

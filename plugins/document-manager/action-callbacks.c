@@ -21,21 +21,7 @@
 #include <libanjuta/anjuta-ui.h>
 #include <libanjuta/anjuta-utils.h>
 
-#include <libanjuta/interfaces/ianjuta-markable.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-editor-convert.h>
-#include <libanjuta/interfaces/ianjuta-editor-line-mode.h>
-#include <libanjuta/interfaces/ianjuta-editor-view.h>
-#include <libanjuta/interfaces/ianjuta-editor-folds.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
-#include <libanjuta/interfaces/ianjuta-print.h>
-#include <libanjuta/interfaces/ianjuta-editor-comment.h>
-#include <libanjuta/interfaces/ianjuta-editor-zoom.h>
-#include <libanjuta/interfaces/ianjuta-editor-goto.h>
-#include <libanjuta/interfaces/ianjuta-editor-language.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <sys/wait.h>
 #include <sys/stat.h>

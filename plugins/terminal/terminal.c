@@ -25,9 +25,7 @@
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
 
-#include <libanjuta/interfaces/ianjuta-terminal.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <sys/types.h>
 #include <unistd.h>
 #include <signal.h>

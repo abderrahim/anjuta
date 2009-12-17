@@ -36,8 +36,7 @@
 #include <glib.h>
 #include <glib/gi18n.h>
 #include <libanjuta/anjuta-launcher.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
-#include <libanjuta/interfaces/ianjuta-message-view.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "plugin.h"
 #include "utilities.h"
 

@@ -29,7 +29,7 @@
 #include <gtk/gtk.h>
 #include <gio/gio.h>
 
-#include <libanjuta/interfaces/ianjuta-vcs.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 G_BEGIN_DECLS
 

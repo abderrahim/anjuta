@@ -19,7 +19,7 @@
 #include <libanjuta/anjuta-preferences.h>
 #include <libanjuta/anjuta-ui.h>
 #include <glib/gi18n.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 extern GType search_plugin_get_type(GTypeModule *module);
 #define ANJUTA_TYPE_PLUGIN_SEARCH         (search_plugin_get_type (NULL))

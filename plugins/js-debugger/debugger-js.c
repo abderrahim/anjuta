@@ -17,10 +17,7 @@
     Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 */
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-debugger-breakpoint.h>
-#include <libanjuta/interfaces/ianjuta-debugger-variable.h>
-#include <libanjuta/interfaces/ianjuta-terminal.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "debugger-server.h"
 #include "debugger-js.h"
 

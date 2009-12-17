@@ -24,8 +24,7 @@
 #include <config.h>
 #include <libanjuta/anjuta-plugin.h>
 #include <libanjuta/anjuta-launcher.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #define GLADE_FILE PACKAGE_DATA_DIR"/glade/anjuta-cvs-plugin.ui"
 

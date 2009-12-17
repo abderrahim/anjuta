@@ -19,8 +19,7 @@
 
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <ctype.h>
 #include <glib.h>
 

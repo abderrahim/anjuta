@@ -21,7 +21,7 @@
 #include <config.h>
 #include <libanjuta/anjuta-plugin.h>
 #include <libanjuta/anjuta-launcher.h>
-#include <libanjuta/interfaces/ianjuta-message-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #define ICON_FILE "anjuta-patch-plugin-48.png"
 

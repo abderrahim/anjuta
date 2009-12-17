@@ -25,8 +25,7 @@
 #include "plugin.h"
 
 #include <gtk/gtk.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-debugger-variable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-plugin.h>
 
 G_BEGIN_DECLS

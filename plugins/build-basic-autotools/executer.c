@@ -27,10 +27,7 @@
 #include <libanjuta/resources.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-terminal.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "executer.h"
 

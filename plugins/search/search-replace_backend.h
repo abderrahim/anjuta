@@ -22,8 +22,7 @@ extern "C"
 {
 #endif
 
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <glib/gi18n.h>
 
 /* Search expression options */

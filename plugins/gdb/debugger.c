@@ -40,12 +40,7 @@
 #include <libanjuta/anjuta-launcher.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-marshal.h>
-#include <libanjuta/interfaces/ianjuta-debugger-breakpoint.h>
-#include <libanjuta/interfaces/ianjuta-debugger-register.h>
-#include <libanjuta/interfaces/ianjuta-debugger-memory.h>
-#include <libanjuta/interfaces/ianjuta-debugger-instruction.h>
-#include <libanjuta/interfaces/ianjuta-debugger-variable.h>
-#include <libanjuta/interfaces/ianjuta-environment.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "debugger.h"
 #include "utilities.h"

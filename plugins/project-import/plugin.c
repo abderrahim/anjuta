@@ -22,11 +22,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-wizard.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
-#include <libanjuta/interfaces/ianjuta-project-backend.h>
-#include <libanjuta/interfaces/ianjuta-vcs.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/gbf-project.h>
 #include <libanjuta/anjuta-async-notify.h>
 

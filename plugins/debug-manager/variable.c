@@ -34,9 +34,7 @@
 
 /*#define DEBUG*/
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-editor-hover.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /* Constants
  *---------------------------------------------------------------------------*/

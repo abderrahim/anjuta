@@ -18,7 +18,7 @@
 #include "macro-dialog.h"
 #include "macro-edit.h"
 #include "macro-actions.h"
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 void on_add_clicked (GtkButton * add, MacroDialog * dialog);
 void on_remove_clicked (GtkButton * remove, MacroDialog * dialog);

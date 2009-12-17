@@ -20,7 +20,7 @@
 
 #include <config.h>
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 //#include "macro-db.h"
 

@@ -22,9 +22,7 @@
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-wizard.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "file.h"
 #include "plugin.h"

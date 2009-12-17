@@ -25,7 +25,7 @@
 #include "queue.h"
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>

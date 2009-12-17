@@ -22,7 +22,7 @@
 
 #include <glib-object.h>
 #include <libanjuta/anjuta-async-command.h>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "symbol-db-engine.h"
 

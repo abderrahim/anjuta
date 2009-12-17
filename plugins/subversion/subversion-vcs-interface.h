@@ -26,7 +26,7 @@
 #define _SUBVERSION_VCS_INTERFACE_H_
 
 #include <libanjuta/anjuta-utils.h>
-#include <libanjuta/interfaces/ianjuta-vcs.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "svn-add-command.h"
 #include "svn-checkout-command.h"

@@ -25,10 +25,7 @@
 #include <config.h>
 #include <gio/gio.h>
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-message-view.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-file-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-command-queue.h>

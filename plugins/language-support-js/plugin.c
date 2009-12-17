@@ -21,12 +21,7 @@
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-session.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor-assist.h>
-#include <libanjuta/interfaces/ianjuta-editor-tip.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <ctype.h>
 
 #include <glib.h>

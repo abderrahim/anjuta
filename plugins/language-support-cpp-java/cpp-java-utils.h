@@ -21,7 +21,7 @@
 #ifndef _CPP_JAVA_UTILS_H_
 #define _CPP_JAVA_UTILS_H_
 
-#include <libanjuta/interfaces/ianjuta-iterable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 gboolean cpp_java_util_jump_to_matching_brace (IAnjutaIterable *iter,
 											   gchar brace, gint limit);

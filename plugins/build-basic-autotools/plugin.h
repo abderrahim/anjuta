@@ -22,7 +22,7 @@
 #define __PLUGIN_H__
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-buildable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "configuration-list.h"
 

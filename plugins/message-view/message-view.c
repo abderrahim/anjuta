@@ -18,7 +18,7 @@
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-preferences.h>
-#include <libanjuta/interfaces/ianjuta-message-view.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "message-view.h"
 #define MESSAGE_TYPE message_get_type()

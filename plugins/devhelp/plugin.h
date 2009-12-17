@@ -26,7 +26,7 @@
 #define _DEVHELP_H_
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #ifndef DISABLE_EMBEDDED_DEVHELP
 #include <devhelp/dh-base.h>

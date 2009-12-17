@@ -25,9 +25,7 @@
 #include "anjuta-design-document.h"
 
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
-#include <libanjuta/interfaces/ianjuta-file-savable.h>
-#include <libanjuta/interfaces/ianjuta-document.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 enum
 {

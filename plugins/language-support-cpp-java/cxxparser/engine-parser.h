@@ -24,7 +24,7 @@
 extern "C" {
 #endif
 
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>		
+#include <libanjuta/interfaces/libanjuta-interfaces.h>		
 
 void engine_parser_init (IAnjutaSymbolManager * manager);
 

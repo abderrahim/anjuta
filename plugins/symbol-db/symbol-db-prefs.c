@@ -28,7 +28,7 @@
 #include <gtk/gtk.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-launcher.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "symbol-db-prefs.h"
 

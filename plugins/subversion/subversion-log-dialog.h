@@ -29,8 +29,7 @@
 #include "svn-log-command.h"
 #include "svn-diff-command.h"
 #include "svn-cat-command.h"
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 void on_menu_subversion_log (GtkAction* action, Subversion* plugin);
 void on_fm_subversion_log (GtkAction *action, Subversion *plugin);

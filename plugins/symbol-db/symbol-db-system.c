@@ -30,7 +30,7 @@
 #include <glib/gstdio.h>
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-launcher.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <string.h>
 
 struct _SymbolDBSystemPriv

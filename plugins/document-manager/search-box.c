@@ -32,9 +32,7 @@
 #include <libanjuta/anjuta-status.h>
 #include <libanjuta/anjuta-debug.h>
 
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-editor-search.h>
-#include <libanjuta/interfaces/ianjuta-editor-selection.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #define ANJUTA_STOCK_GOTO_LINE "anjuta-goto-line"
 

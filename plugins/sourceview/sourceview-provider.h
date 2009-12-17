@@ -20,7 +20,7 @@
 #ifndef _SOURCEVIEW_PROVIDER_H_
 #define _SOURCEVIEW_PROVIDER_H_
 
-#include <libanjuta/interfaces/ianjuta-provider.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <gtksourceview/gtksourceview.h>
 #include "sourceview.h"
 

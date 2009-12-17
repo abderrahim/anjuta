@@ -25,7 +25,7 @@
 #include <config.h>
 #include <libanjuta/anjuta-shell.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-language.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>

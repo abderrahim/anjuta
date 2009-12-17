@@ -31,7 +31,7 @@
 #include "parameters.h"
 
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-project-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <signal.h>
 

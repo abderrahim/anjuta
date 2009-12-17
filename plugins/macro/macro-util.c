@@ -19,7 +19,7 @@
 
 #include "macro-util.h"
 #include <stdlib.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 
 static char *get_date_time(void);

@@ -22,7 +22,7 @@
  * 	Boston, MA  02110-1301, USA.
  */
 
-#include <libanjuta/interfaces/ianjuta-symbol.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/anjuta-debug.h>
 

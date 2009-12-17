@@ -22,8 +22,7 @@
 #define __PLUGIN_H__
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/interfaces/ianjuta-debugger.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #define GLADE_FILE PACKAGE_DATA_DIR"/glade/anjuta-debug-manager.ui"
 

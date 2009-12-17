@@ -24,9 +24,7 @@
 
 #include "sourceview-cell.h"
 
-#include <libanjuta/interfaces/ianjuta-editor-cell.h>
-#include <libanjuta/interfaces/ianjuta-editor-cell-style.h>
-#include <libanjuta/interfaces/ianjuta-iterable.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/anjuta-debug.h>
 

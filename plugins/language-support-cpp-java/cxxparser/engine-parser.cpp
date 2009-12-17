@@ -27,7 +27,7 @@
 
 #include <string>
 #include <vector>
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-debug.h>
 
 using namespace std;

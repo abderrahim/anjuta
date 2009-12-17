@@ -30,7 +30,7 @@
 #include "druid.h"
 
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-wizard.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /*---------------------------------------------------------------------------*/
 

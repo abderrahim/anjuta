@@ -27,10 +27,7 @@
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/anjuta-preferences.h>
 #include <libanjuta/anjuta-status.h>
-#include <libanjuta/interfaces/ianjuta-document-manager.h>
-#include <libanjuta/interfaces/ianjuta-editor-factory.h>
-#include <libanjuta/interfaces/ianjuta-editor.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <gtksourceview/gtksourceview.h>
 #include <gtksourceview/gtksourcestyleschememanager.h>
 

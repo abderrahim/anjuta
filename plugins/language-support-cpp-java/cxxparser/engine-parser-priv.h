@@ -26,7 +26,7 @@
 
 #ifdef __cplusplus
 extern "C" {
-#include <libanjuta/interfaces/ianjuta-symbol-manager.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 }
 #endif
 
