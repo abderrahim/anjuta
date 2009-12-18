@@ -43,7 +43,7 @@ public interface IAnjuta.Editor : Object
 	 * This signal is emitted when any character is added inside the editor.
 	 * The newly added character is @ch which has been inserted at @position.
 	 */
-	public virtual signal void char_added (Object position, char ch);
+	public signal void char_added (Object position, char ch);
 
 	/**
 	 * IAnjutaEditor::backspace:
@@ -51,7 +51,7 @@ public interface IAnjuta.Editor : Object
 	 *
 	 * The signal is emitted when the user presses backspace
 	 */
-	public virtual signal void backspace ();
+	public signal void backspace ();
 
 	/**
 	 * IAnjutaEditor::changed:
@@ -68,7 +68,7 @@ public interface IAnjuta.Editor : Object
 	 * number of line breaks in the added or removed text.
 	 */
 	/* FIXME */
-	public virtual signal void changed (Object position, bool added, int length, int lines, string text);
+	public signal void changed (Object position, bool added, int length, int lines, string text);
 
 	/**
 	 * ianjuta_editor_get_tabsize:

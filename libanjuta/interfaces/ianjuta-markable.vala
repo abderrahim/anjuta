@@ -43,7 +43,7 @@ public interface IAnjuta.Markable : Object
 	 *
 	 * The signal is emitted when the user clicks on a marker
 	 */
-	public virtual signal void marker_clicked (bool double_click, int location);
+	public signal void marker_clicked (bool double_click, int location);
 
 	/**
 	 * ianjuta_markable_mark:

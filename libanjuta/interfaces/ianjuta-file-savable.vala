@@ -21,7 +21,7 @@ public interface IAnjuta.FileSavable : IAnjuta.File
 	 * undo, the file is back to its saved content. It is triggered
 	 * if the file becomes read-only or give a conflict too.
 	 */
-	public virtual signal void update_save_ui ();
+	public signal void update_save_ui ();
 
 	/**
 	 * IAnjutaFileSavable::saved:
@@ -30,7 +30,7 @@ public interface IAnjuta.FileSavable : IAnjuta.File
 	 *
 	 * This signal is emitted when the content is saved.
 	 */
-	public virtual signal void saved (GLib.File? file);
+	public signal void saved (GLib.File? file);
 
 	/**
 	 * ianjuta_file_savable_save:

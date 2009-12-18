@@ -35,7 +35,7 @@ public interface IAnjuta.MessageView : Object
 	 *
 	 * Emitted when the user clicks on a message
 	 */
-	public virtual signal void message_clicked (string message);
+	public signal void message_clicked (string message);
 
 	/**
 	 * IAnjutaMessageView::buffer-flushed:
@@ -44,7 +44,7 @@ public interface IAnjuta.MessageView : Object
 	 *
 	 * Emitted when #ianjuta_message_view_buffer_append found a newline
 	 */
-	public virtual signal void buffer_flushed (string line);
+	public signal void buffer_flushed (string line);
 
 	/**
 	 * ianjuta_message_view_buffer_append:

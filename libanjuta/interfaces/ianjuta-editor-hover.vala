@@ -16,7 +16,7 @@ public interface IAnjuta.EditorHover : Editor
 	 * The mouse is held for a moment over @position. This can be used to show
 	 * all tooltip.
 	 */
-	public virtual signal void hover_over (Object position);
+	public signal void hover_over (Object position);
 
 	/* IAnjutaEditorHover::hover-leave
 	 * @self: self
@@ -25,7 +25,7 @@ public interface IAnjuta.EditorHover : Editor
 	 * User moved the mouse away - can be used to clean up things done in
 	 * #IAnjutaEditorHover::hover-over
 	 */
-	public virtual signal void hover_leave (Object position);
+	public signal void hover_leave (Object position);
 
 	/**
 	 * ianjuta_editor_hover_display:

@@ -18,7 +18,7 @@ public interface IAnjuta.Document : Object
 	 * because some internal state of the document has changed. For example, if
 	 * current line position is changed, it needs to be reflected to the UI.
 	 */
-	public virtual signal void update_ui ();
+	public signal void update_ui ();
 
 	/**
 	 * ianjuta_document_get_filename:

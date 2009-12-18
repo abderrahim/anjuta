@@ -103,7 +103,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when the debugger is started.
 	 */
-	public virtual signal void debugger_started ();
+	public signal void debugger_started ();
 
 	/**
 	 * IAnjutaDebugger::debugger_stopped:
@@ -113,7 +113,7 @@ public interface IAnjuta.Debugger : Object
 	 * This signal is emitted when the debugger is stopped. The error
 	 * parameters allow to check it has run correctly.
 	 */
-	public virtual signal void debugger_stopped (Error err);
+	public signal void debugger_stopped (Error err);
 
 	/**
 	 * IAnjutaDebugger::program_loaded:
@@ -121,7 +121,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when a program is loaded.
 	 */
-	public virtual signal void program_loaded ();
+	public signal void program_loaded ();
 
 	/**
 	 * IAnjutaDebugger::program_running:
@@ -129,7 +129,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when the program is running.
 	 */
-	public virtual signal void program_running ();
+	public signal void program_running ();
 
 	/**
 	 * IAnjutaDebugger::program_stopped:
@@ -137,7 +137,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when the program is interrupted.
 	 */
-	public virtual signal void program_stopped ();
+	public signal void program_stopped ();
 
 	/**
 	 * IAnjutaDebugger::program_exited:
@@ -145,7 +145,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when the program exits.
 	 */
-	public virtual signal void program_exited ();
+	public signal void program_exited ();
 
 	/**
 	 * IAnjutaDebugger::sharedlib_event:
@@ -154,7 +154,7 @@ public interface IAnjuta.Debugger : Object
 	 * This signal is emitted when the program load a new shared
 	 * library.
 	 */
-	public virtual signal void sharedlib_event ();
+	public signal void sharedlib_event ();
 
 	/**
 	 * IAnjutaDebugger::program_moved:
@@ -169,7 +169,7 @@ public interface IAnjuta.Debugger : Object
 	 * location. Most of the time, after the program has stopped but it
 	 * could happen even if it is still running.
 	 */
-	public virtual signal void program_moved (int pid, int tid, ulong address, string? file, uint line);
+	public signal void program_moved (int pid, int tid, ulong address, string? file, uint line);
 
 	/**
 	 * IAnjutaDebugger::frame_changed:
@@ -179,7 +179,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when the current frame changes.
 	 */
-	public virtual signal void frame_changed (uint frame, int thread);
+	public signal void frame_changed (uint frame, int thread);
 
 	/**
 	 * IAnjutaDebugger::signal_received:
@@ -189,7 +189,7 @@ public interface IAnjuta.Debugger : Object
 	 *
 	 * This signal is emitted when the program received a unix signal.
 	 */
-	public virtual signal void signal_received (string name, string description);
+	public signal void signal_received (string name, string description);
 
 	/**
 	 * IAnjutaDebugger::debugger_ready:
@@ -199,7 +199,7 @@ public interface IAnjuta.Debugger : Object
 	 * This signal is emitted when the debugger is ready to execute
 	 * a new command.
 	 */
-	public virtual signal void debugger_ready (DebuggerState state);
+	public signal void debugger_ready (DebuggerState state);
 
 
 	/**

@@ -20,7 +20,7 @@ public interface IAnjuta.DebugManager
 	 *
 	 * This signal is emitted when the debugger is started.
 	 */
-	public virtual signal void debugger_started ();
+	public signal void debugger_started ();
 
 	/**
 	* IAnjutaDebugManager::debugger_stopped:
@@ -29,7 +29,7 @@ public interface IAnjuta.DebugManager
 	*
 	* This signal is emitted when the debugger is stopped.
 	*/
-	public virtual signal void debugger_stopped (Error err);
+	public signal void debugger_stopped (Error err);
 
 	/**
 	 * IAnjutaDebugManager::program_loaded:
@@ -38,7 +38,7 @@ public interface IAnjuta.DebugManager
 	 * This signal is emitted when a program is loaded most of the
 	 * time just before the first program_stopped signal.
 	 */
-	public virtual signal void program_loaded ();
+	public signal void program_loaded ();
 
 	/**
 	 * IAnjutaDebugManager::program_unloaded:
@@ -48,7 +48,7 @@ public interface IAnjuta.DebugManager
 	 * debugger is stopped while a program is loaded, this signal
 	 * is emitted before the debugger_stopped signal.
 	 */
-	public virtual signal void program_unloaded ();
+	public signal void program_unloaded ();
 
 	/**
 	 * IAnjutaDebugManager::program_started:
@@ -59,7 +59,7 @@ public interface IAnjuta.DebugManager
 	 * signal will be emitted too. If the program starts is not stopped
 	 * by the debugger a program-running signal will be emitted.
 	 */
-	public virtual signal void program_started ();
+	public signal void program_started ();
 
 	/**
 	 * IAnjutaDebugManager::program_exited:
@@ -69,7 +69,7 @@ public interface IAnjuta.DebugManager
 	 * debugger is stopped while a program is running or stopped, this
 	 * signal is emitted before the program_unloaded signal.
 	 */
-	public virtual signal void program_exited ();
+	public signal void program_exited ();
 
 	/**
 	 * IAnjutaDebugManager::program_stopped:
@@ -77,7 +77,7 @@ public interface IAnjuta.DebugManager
 	 *
 	 * This signal is emitted when the program is stopped.
 	 */
-	public virtual signal void program_stopped ();
+	public signal void program_stopped ();
 
 	/**
 	 * IAnjutaDebugManager::program_running:
@@ -85,7 +85,7 @@ public interface IAnjuta.DebugManager
 	 *
 	 * This signal is emitted when the program is running.
 	 */
-	public virtual signal void program_running ();
+	public signal void program_running ();
 
 	/**
 	 * IAnjutaDebugManager::sharedlib_event:
@@ -95,7 +95,7 @@ public interface IAnjuta.DebugManager
 	 * is useful to try to set pending breakpoints those could be in
 	 * the newly loaded library.
 	 */
-	public virtual signal void sharedlib_event ();
+	public signal void sharedlib_event ();
 
 	/**
 	 * IAnjutaDebugManager::program_moved:
@@ -110,7 +110,7 @@ public interface IAnjuta.DebugManager
 	 * location. Most of the time, after the program has stopped but it
 	 * could happen even if it is still running.
 	 */
-	public virtual signal void program_moved (int pid, int tid, ulong address, string? file, uint line);
+	public signal void program_moved (int pid, int tid, ulong address, string? file, uint line);
 
 	/**
 	 * IAnjutaDebugManager::frame_changed:
@@ -124,7 +124,7 @@ public interface IAnjuta.DebugManager
 	 * Several commands use this current frame, by example the register
 	 * window display the register values for the current thread only.
 	 */
-	public virtual signal void frame_changed (uint frame, int thread);
+	public signal void frame_changed (uint frame, int thread);
 
 	/**
 	 * IAnjutaDebugManager::location_changed:
@@ -137,7 +137,7 @@ public interface IAnjuta.DebugManager
 	 * equal to the program location when the program stops but can be
 	 * changed afterward by the user.
 	 */
-	public virtual signal void location_changed (ulong address, string? uri, uint line);
+	public signal void location_changed (ulong address, string? uri, uint line);
 
 	/**
 	 * IAnjutaDebugManager::signal_received:
@@ -148,7 +148,7 @@ public interface IAnjuta.DebugManager
 	 * This signal is emitted when the debugged program receives a
 	 * unix signal.
 	 */
-	public virtual signal void signal_received (string name, string description);
+	public signal void signal_received (string name, string description);
 
 	/**
 	 * IAnjutaDebugManager::breakpoint_changed:
@@ -159,7 +159,7 @@ public interface IAnjuta.DebugManager
 	 * This signal is emitted when a breakpoint is changed. It includes
 	 * new breakpoint and deleted breakpoint.
 	 */
-	public virtual signal void breakpoint_changed (DebuggerBreakpointItem breakpoint);
+	public signal void breakpoint_changed (DebuggerBreakpointItem breakpoint);
 
 	/**
 	 * ianjuta_debug_manager_start:

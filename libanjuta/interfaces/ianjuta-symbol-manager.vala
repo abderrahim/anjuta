@@ -35,7 +35,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * This signal is emitted when a scanning of one or more files on project db
 	 * ends.
 	 */
-	public virtual signal void prj_scan_end (int process_id);
+	public signal void prj_scan_end (int process_id);
 
 	/**
 	 * IAnjutaSymbolManager::prj_symbol_inserted:
@@ -44,7 +44,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * This signal is emitted when a new symbol is added to project db.
 	 * The chain of symbols emitted is inserted, scan-end, removed.
 	 */
-	public virtual signal void prj_symbol_inserted (int symbol_id);
+	public signal void prj_symbol_inserted (int symbol_id);
 
 	/**
 	 * IAnjutaSymbolManager::prj_symbol_removed:
@@ -53,7 +53,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * This signal is emitted when a new symbol is removed from project db.
 	 * The chain of symbols emitted is inserted, scan-end, removed.
 	 */
-	public virtual signal void prj_symbol_removed (int symbol_id);
+	public signal void prj_symbol_removed (int symbol_id);
 
 	/**
 	 * IAnjutaSymbolManager::prj_symbol_updated:
@@ -73,7 +73,7 @@ public interface IAnjuta.SymbolManager : Object
 	 *     a second stage because of the 'tmp_flag = 0'. Triggers will remove
 	 *     also scope_ids and other things.
 	 */
-	public virtual signal void prj_symbol_updated (int symbol_id);
+	public signal void prj_symbol_updated (int symbol_id);
 
 	/**
 	 * IAnjutaSymbolManager::sys_scan_end:
@@ -83,7 +83,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * ends. This signal doesn't mean that all the scan process for the packages
 	 * is ended, but that just one (or more) is (are).
 	 */
-	public virtual signal void sys_scan_end (int process_id);
+	public signal void sys_scan_end (int process_id);
 
 	/**
 	 * IAnjutaSymbolManager::sys_symbol_inserted:
@@ -92,7 +92,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * This signal is emitted when a new symbol is added to system db.
 	 * The chain of symbols emitted is inserted, scan-end, removed.
 	 */
-	public virtual signal void sys_symbol_inserted (int symbol_id);
+	public signal void sys_symbol_inserted (int symbol_id);
 
 	/**
 	 * IAnjutaSymbolManager::sys_symbol_removed:
@@ -101,7 +101,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * This signal is emitted when a new symbol is removed from system db.
 	 * The chain of symbols emitted is inserted, scan-end, removed.
 	 */
-	public virtual signal void sys_symbol_removed (int symbol_id);
+	public signal void sys_symbol_removed (int symbol_id);
 
 	/**
 	 * IAnjutaSymbolManager::sys_symbol_updated:
@@ -121,7 +121,7 @@ public interface IAnjuta.SymbolManager : Object
 	 *     a second stage because of the 'tmp_flag = 0'. Triggers will remove
 	 *     also scope_ids and other things.
 	 */
-	public virtual signal void sys_symbol_updated (int symbol_id);
+	public signal void sys_symbol_updated (int symbol_id);
 
 	/**
 	 * ianjuta_symbol_manager_search:

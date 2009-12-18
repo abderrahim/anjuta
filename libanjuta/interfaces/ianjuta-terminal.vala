@@ -17,7 +17,7 @@ public interface IAnjuta.Terminal
 	 *
 	 * This signal is emitted when a child exit.
 	 */
-	public virtual signal void child_exited (int pid, int status);
+	public signal void child_exited (int pid, int status);
 
 
 	/**

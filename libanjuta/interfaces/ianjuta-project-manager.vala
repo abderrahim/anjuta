@@ -60,7 +60,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * fixme
 	 */
-	public virtual signal void element_added (string element_uri);
+	public signal void element_added (string element_uri);
 
 	/**
 	 * IAnjutaProjectManager::element_removed:
@@ -70,7 +70,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * fixme
 	 */
-	public virtual signal void element_removed (string element_uri);
+	public signal void element_removed (string element_uri);
 
 	/**
 	 * IAnjutaProjectManager::element_selected:
@@ -80,7 +80,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * fixme
 	 */
-	public virtual signal void element_selected (string element_uri);
+	public signal void element_selected (string element_uri);
 
 	// Methods
 

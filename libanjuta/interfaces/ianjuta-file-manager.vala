@@ -24,7 +24,7 @@ public interface IAnjuta.FileManager : Object
 	 *
 	 * fixme
 	 */
-	public virtual signal void section_changed (GLib.File file);
+	public signal void section_changed (GLib.File file);
 
 	/**
 	 * ianjuta_file_manager_set_root:

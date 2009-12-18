@@ -16,7 +16,7 @@ public interface IAnjuta.EditorLanguage : Editor
 	 *
 	 * the language of the editor changed to @language
 	 */
-	public virtual signal void language_changed (string language);
+	public signal void language_changed (string language);
 
 	/**
 	 * ianjuta_editor_language_get_supported_languages:
