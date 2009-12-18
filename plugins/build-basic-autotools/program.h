@@ -55,6 +55,6 @@ gboolean build_program_remove_env (BuildProgram *proc, const gchar *name);
 void build_program_override (BuildProgram *proc, IAnjutaEnvironment *env);
 
 void build_program_set_callback (BuildProgram *proc, IAnjutaBuilderCallback callback, gpointer user_data);
-void build_program_callback (BuildProgram *proc, GObject *sender, IAnjutaBuilderHandle handle, GError *err); 
+void build_program_callback (BuildProgram *proc, GObject *sender, gpointer handle, GError *err); 
 
 #endif /* PROGRAM_H */

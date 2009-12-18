@@ -126,7 +126,7 @@ struct _DmaStart
 	gchar *remote_debugger;
 	
 	gchar *build_target;
-	IAnjutaBuilderHandle build_handle;
+	gpointer build_handle;
 };
 
 /* Widgets found in glade file
@@ -988,7 +988,7 @@ load_target (DmaStart *this, const gchar *target)
 }
 
 static void
-on_build_finished (GObject *builder, IAnjutaBuilderHandle handle, GError *err, gpointer user_data)
+on_build_finished (GObject *builder, gpointer handle, GError *err, gpointer user_data)
 {
 	DmaStart *this = (DmaStart *)user_data;
 	
@@ -1004,7 +1004,7 @@ on_build_finished (GObject *builder, IAnjutaBuilderHandle handle, GError *err, g
 }
 
 static void
-on_is_built_finished (GObject *builder, IAnjutaBuilderHandle handle, GError *err, gpointer user_data)
+on_is_built_finished (GObject *builder, gpointer handle, GError *err, gpointer user_data)
 {
 	DmaStart *this = (DmaStart *)user_data;
 	

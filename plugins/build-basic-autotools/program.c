@@ -266,7 +266,7 @@ build_program_set_callback (BuildProgram *prog, IAnjutaBuilderCallback callback,
 	prog->user_data = user_data;
 }
 
-void build_program_callback (BuildProgram *prog, GObject *sender, IAnjutaBuilderHandle handle, GError *err)
+void build_program_callback (BuildProgram *prog, GObject *sender, gpointer handle, GError *err)
 {
 	if (prog->callback != NULL)
 	{

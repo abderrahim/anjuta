@@ -453,7 +453,7 @@ run_program (RunProgramPlugin *plugin)
 }
 
 static void
-on_build_finished (GObject *builder, IAnjutaBuilderHandle handle, GError *err, gpointer user_data)
+on_build_finished (GObject *builder, gpointer handle, GError *err, gpointer user_data)
 {
 	RunProgramPlugin *plugin = (RunProgramPlugin *)user_data;
 	
@@ -470,7 +470,7 @@ on_build_finished (GObject *builder, IAnjutaBuilderHandle handle, GError *err, g
 }
 
 static void
-on_is_built_finished (GObject *builder, IAnjutaBuilderHandle handle, GError *err, gpointer user_data)
+on_is_built_finished (GObject *builder, gpointer handle, GError *err, gpointer user_data)
 {
 	RunProgramPlugin *plugin = (RunProgramPlugin *)user_data;
 	

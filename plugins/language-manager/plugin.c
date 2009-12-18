@@ -39,7 +39,7 @@ typedef struct _Language Language;
 
 struct _Language
 {
-	IAnjutaLanguageId id;
+	int id;
 	gchar* name;
 	GList* strings;
 	GList* mime_types;
@@ -195,7 +195,7 @@ typedef struct
 {
 	LanguageManager* lang;
 	const gchar* target;
-	IAnjutaLanguageId result_id;
+	int result_id;
 	gboolean found;
 } LangData;
 
@@ -224,14 +224,14 @@ language_manager_find_string (gpointer key, Language* language, LangData* data)
 	}
 }
 
-static IAnjutaLanguageId
+static int
 ilanguage_get_from_mime_type (IAnjutaLanguage* ilang, const gchar* mime_type, GError** e)
 {
 	if (!mime_type)
 		return 0;
 	LanguageManager* lang = LANGUAGE_MANAGER(ilang);
 	LangData* data = g_new0(LangData, 1);
-	IAnjutaLanguageId ret_id;
+	int ret_id;
 	data->target = mime_type;
 	g_hash_table_foreach (lang->languages, (GHFunc)language_manager_find_mime_type, data);
 	if (data->found)
@@ -247,14 +247,14 @@ ilanguage_get_from_mime_type (IAnjutaLanguage* ilang, const gchar* mime_type, GE
 	return ret_id;
 }
 
-static IAnjutaLanguageId
+static int
 ilanguage_get_from_string (IAnjutaLanguage* ilang, const gchar* string, GError** e)
 {
 	if (!string)
 		return 0;
 	LanguageManager* lang = LANGUAGE_MANAGER(ilang);
 	LangData* data = g_new0(LangData, 1);
-	IAnjutaLanguageId ret_id;
+	int ret_id;
 	data->target = string;
 	g_hash_table_foreach (lang->languages, (GHFunc)language_manager_find_string, data);
 	if (data->found)
@@ -271,7 +271,7 @@ ilanguage_get_from_string (IAnjutaLanguage* ilang, const gchar* string, GError**
 }
 
 static const gchar*
-ilanguage_get_name (IAnjutaLanguage* ilang, IAnjutaLanguageId id, GError** e)
+ilanguage_get_name (IAnjutaLanguage* ilang, int id, GError** e)
 {
 	LanguageManager* lang = LANGUAGE_MANAGER(ilang);
 	Language* language = g_hash_table_lookup (lang->languages,
@@ -287,7 +287,7 @@ ilanguage_get_name (IAnjutaLanguage* ilang, IAnjutaLanguageId id, GError** e)
 }
 
 static GList*
-ilanguage_get_strings (IAnjutaLanguage* ilang, IAnjutaLanguageId id, GError** e)
+ilanguage_get_strings (IAnjutaLanguage* ilang, int id, GError** e)
 {
 	LanguageManager* lang = LANGUAGE_MANAGER(ilang);
 	Language* language = g_hash_table_lookup (lang->languages,
@@ -298,14 +298,13 @@ ilanguage_get_strings (IAnjutaLanguage* ilang, IAnjutaLanguageId id, GError** e)
 		return NULL;	
 }
 
-static IAnjutaLanguageId
+static int
 ilanguage_get_from_editor (IAnjutaLanguage* ilang, IAnjutaEditorLanguage* editor, GError** e)
 {	
 	const gchar* language = 
 			ianjuta_editor_language_get_language (editor, e);
 		
-	IAnjutaLanguageId id = 
-			ilanguage_get_from_string (ilang, language, e);
+	int id = ilanguage_get_from_string (ilang, language, e);
 	
 	return id;
 }

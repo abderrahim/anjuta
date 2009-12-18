@@ -406,7 +406,7 @@ prepare_files_to_be_scanned (SymbolDBSystem *sdbs,
 				if ((info = g_file_query_info ((GFile *)tmp_node->data, G_FILE_ATTRIBUTE_STANDARD_CONTENT_TYPE,
 											  G_FILE_QUERY_INFO_NONE, NULL, NULL)))
 				{
-					IAnjutaLanguageId lang_id;
+					int lang_id;
 					const char *lang;
 					
 					lang_id = ianjuta_language_get_from_mime_type (priv->lang_manager,

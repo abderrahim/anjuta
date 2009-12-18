@@ -1470,7 +1470,7 @@ build_save_and_execute_command (BasicAutotoolsPlugin* bplugin, BuildProgram *pro
 
 static void
 build_execute_after_command (GObject *sender,
-							   IAnjutaBuilderHandle handle,
+							   gpointer handle,
 							   GError *error,
 							   gpointer user_data)
 {
@@ -1689,7 +1689,7 @@ build_clean_dir (BasicAutotoolsPlugin *plugin, const gchar *dirname,
 
 static void
 build_remove_build_dir (GObject *sender,
-						IAnjutaBuilderHandle context,
+						gpointer context,
 						GError *error,
 						gpointer user_data)
 {
@@ -1815,7 +1815,7 @@ build_compile_file (BasicAutotoolsPlugin *plugin, const gchar *filename)
 
 static void
 build_project_configured (GObject *sender,
-							IAnjutaBuilderHandle handle,
+							gpointer handle,
 							GError *error,
 							gpointer user_data)
 {
@@ -1885,7 +1885,7 @@ build_configure_dir (BasicAutotoolsPlugin *plugin, const gchar *dirname, const g
 
 static void
 build_configure_after_autogen (GObject *sender,
-							   IAnjutaBuilderHandle handle,
+							   gpointer handle,
 							   GError *error,
 							   gpointer user_data)
 {
@@ -3434,7 +3434,7 @@ ifile_iface_init (IAnjutaFileIface *iface)
 /* IAnjutaBuilder implementation
  *---------------------------------------------------------------------------*/
 
-static IAnjutaBuilderHandle
+static gpointer
 ibuilder_is_built (IAnjutaBuilder *builder, const gchar *uri,
 	       IAnjutaBuilderCallback callback, gpointer user_data,
        	       GError **err)
@@ -3450,10 +3450,10 @@ ibuilder_is_built (IAnjutaBuilder *builder, const gchar *uri,
 	
 	g_free (filename);
 	
-	return (IAnjutaBuilderHandle)context;
+	return context;
 }
 
-static IAnjutaBuilderHandle
+static gpointer
 ibuilder_build (IAnjutaBuilder *builder, const gchar *uri,
 	       	IAnjutaBuilderCallback callback, gpointer user_data,
 		GError **err)
@@ -3469,11 +3469,11 @@ ibuilder_build (IAnjutaBuilder *builder, const gchar *uri,
 	
 	g_free (filename);
 	
-	return (IAnjutaBuilderHandle)context;
+	return context;
 }
 
 static void
-ibuilder_cancel (IAnjutaBuilder *builder, IAnjutaBuilderHandle handle, GError **err)
+ibuilder_cancel (IAnjutaBuilder *builder, gpointer handle, GError **err)
 {
 	BasicAutotoolsPlugin *plugin = ANJUTA_PLUGIN_BASIC_AUTOTOOLS (builder);
 

@@ -3626,7 +3626,7 @@ symbol_db_engine_add_new_files (SymbolDBEngine *dbe,
 
 	for (i = 0; i < sources_array->len; i++)
 	{		
-		IAnjutaLanguageId lang_id;
+		int lang_id;
 		GFile *gfile;
 		GFileInfo *gfile_info;	
 		const gchar *file_mime;

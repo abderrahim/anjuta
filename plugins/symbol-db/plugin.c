@@ -950,7 +950,7 @@ do_add_new_files (SymbolDBPlugin *sdb_plugin, const GPtrArray *sources_array,
 		const gchar *local_filename;
 		GFile *gfile;
 		GFileInfo *gfile_info;
-		IAnjutaLanguageId lang_id;
+		int lang_id;
 		
 		if ( (local_filename = g_ptr_array_index (sources_array, i)) == NULL)		
 			continue;
@@ -1299,7 +1299,7 @@ do_import_system_sources_after_abort (SymbolDBPlugin *sdb_plugin,
 		const gchar *local_filename;
 		GFile *gfile;
 		GFileInfo *gfile_info;
-		IAnjutaLanguageId lang_id;
+		int lang_id;
 		
 		local_filename = g_ptr_array_index (sources_array, i);
 		
