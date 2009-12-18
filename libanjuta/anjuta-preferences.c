@@ -72,7 +72,7 @@
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/resources.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 /* AnjutaPreferences is a singleton */
 static AnjutaPreferences* default_preferences = NULL;

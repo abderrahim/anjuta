@@ -37,8 +37,7 @@
 #include <libanjuta/anjuta-plugin-handle.h>
 #include <libanjuta/anjuta-plugin.h>
 #include <libanjuta/anjuta-c-plugin-factory.h>
-#include <libanjuta/interfaces/ianjuta-plugin-factory.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 
 enum

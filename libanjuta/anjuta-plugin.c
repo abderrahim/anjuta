@@ -173,7 +173,7 @@
 #include <config.h>
 #include <string.h>
 #include <libanjuta/anjuta-marshal.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "anjuta-plugin.h"
 
 typedef struct 

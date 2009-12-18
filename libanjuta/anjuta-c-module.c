@@ -68,7 +68,7 @@
 
 #include "anjuta-c-module.h"
 
-#include <libanjuta/interfaces/ianjuta-plugin-factory.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include <gmodule.h>
 
