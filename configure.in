@@ -62,8 +62,9 @@ AC_SUBST(LIBWNCK_REQUIRED)
 AC_SUBST(GDA_REQUIRED)
 AC_SUBST(UNIQUE_REQUIRED)
 
-AM_INIT_AUTOMAKE([1.9 dist-bzip2 no-dist-gzip])
+AM_INIT_AUTOMAKE([1.11 dist-bzip2 no-dist-gzip])
 AC_CONFIG_HEADERS(config.h)
+AM_SILENT_RULES(yes)
 AC_DISABLE_STATIC
 AM_MAINTAINER_MODE
 GNOME_DOC_INIT
@@ -111,6 +112,9 @@ AM_DISABLE_STATIC
 AM_PROG_LIBTOOL
 
 AC_TYPE_SIGNAL
+
+AM_PROG_VALAC
+GOBJECT_INTROSPECTION_CHECK(0.6.6)
 
 dnl ***************************************************************************
 dnl Check for GConf stuff to handle schema installation

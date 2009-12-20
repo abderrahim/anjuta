@@ -1,5 +1,5 @@
 
-SUBDIRS = interfaces 
+SUBDIRS = interfaces
 
 AM_CPPFLAGS = \
 	-I$(top_srcdir) \
@@ -143,7 +143,7 @@ libanjutainclude_HEADERS = \
 	$(libanjuta_include) \
 	anjuta-enum-types.h
 
-BUILT_SOURCES=anjuta-marshal.c anjuta-marshal.h  anjuta-enum-types.h anjuta-enum-types.c
+BUILT_SOURCES=anjuta-marshal.c anjuta-marshal.h anjuta-enum-types.h anjuta-enum-types.c
 
 anjuta-marshal.h: anjuta-marshal.list
 	@GLIB_GENMARSHAL@ \
@@ -196,6 +196,28 @@ EXTRA_DIST = \
 DISTCLEANFILES = \
   anjuta-enum-types.h \
   anjuta-enum-types.c \
-  stamp-anjuta-enum-types.h
+  stamp-anjuta-enum-types.h \
+  Anjuta-1.0.gir \
+  Anjuta-1.0.typelib
+
+girdir = $(INTROSPECTION_GIRDIR)
+gir_DATA = Anjuta-1.0.gir
+
+typelibdir = $(INTROSPECTION_TYPELIBDIR)
+typelib_DATA = Anjuta-1.0.typelib
+
+Anjuta-1.0.gir: $(libanjuta_la_SOURCES) libanjuta.la
+	$(INTROSPECTION_SCANNER) --namespace Anjuta --nsversion 1.0 \
+		--include GConf-2.0 --include Gtk-2.0 \
+		--library libanjuta.la \
+		--libtool "$(LIBTOOL)" \
+		--output $@ \
+		--pkg-export libanjuta-1.0 \
+		-I$(top_srcdir) -I. \
+		$(libanjuta_la_SOURCES)
+
+Anjuta-1.0.typelib: Anjuta-1.0.gir
+	$(INTROSPECTION_COMPILER) $< -o $@
 
 -include $(top_srcdir)/git.mk
+
