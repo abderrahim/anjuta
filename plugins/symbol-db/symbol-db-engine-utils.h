@@ -86,7 +86,7 @@ symbol_db_util_get_files_with_zero_symbols (SymbolDBEngine *dbe);
  * @return The pixbufs. It will initialize pixbufs first if they weren't before
  * @param node_access can be NULL.
  */
-const GdkPixbuf *
+GdkPixbuf *
 symbol_db_util_get_pixbuf  (const gchar *node_type, const gchar *node_access);
 
 /**

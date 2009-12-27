@@ -1878,7 +1878,7 @@ iprint_iface_init(IAnjutaPrintIface* iface)
 }
 
 
-static const GList*
+static GList*
 ilanguage_get_supported_languages (IAnjutaEditorLanguage *ilanguage,
 								   GError **err)
 {

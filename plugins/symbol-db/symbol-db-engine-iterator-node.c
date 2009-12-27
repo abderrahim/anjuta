@@ -432,7 +432,7 @@ isymbol_is_local (IAnjutaSymbol *isymbol, GError **err)
 	return symbol_db_engine_iterator_node_get_symbol_is_file_scope (s);
 }
 
-static const GdkPixbuf*
+static GdkPixbuf*
 isymbol_get_icon (IAnjutaSymbol *isymbol, GError **err)
 {
 	SymbolDBEngineIteratorNode *s;

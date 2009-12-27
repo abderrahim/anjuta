@@ -79,7 +79,7 @@ isymbol_manager_search (IAnjutaSymbolManager *sm,
 
 IAnjutaIterable*
 isymbol_manager_get_members (IAnjutaSymbolManager *sm,
-							 const IAnjutaSymbol *symbol, 
+							 IAnjutaSymbol *symbol, 
 							 IAnjutaSymbolField info_fields,
 							 GError **err)
 {
@@ -105,7 +105,7 @@ isymbol_manager_get_members (IAnjutaSymbolManager *sm,
 
 IAnjutaIterable*
 isymbol_manager_get_class_parents (IAnjutaSymbolManager *sm,
-							 const IAnjutaSymbol *symbol,
+							 IAnjutaSymbol *symbol,
 							 IAnjutaSymbolField info_fields,
 							 GError **err)
 {
@@ -149,7 +149,7 @@ isymbol_manager_get_scope (IAnjutaSymbolManager *sm,
 
 IAnjutaIterable*
 isymbol_manager_get_parent_scope (IAnjutaSymbolManager *sm,
-								  const IAnjutaSymbol *symbol, 
+								  IAnjutaSymbol *symbol, 
 								  const gchar *filename, 
 								  IAnjutaSymbolField info_fields,
 								  GError **err)
@@ -202,7 +202,7 @@ isymbol_manager_get_scope_chain (IAnjutaSymbolManager *sm,
 IAnjutaIterable* 
 isymbol_manager_search_symbol_in_scope (IAnjutaSymbolManager *sm,
                                         const gchar *pattern, 
-                                        const IAnjutaSymbol *container_symbol, 
+                                        IAnjutaSymbol *container_symbol, 
                                         IAnjutaSymbolType match_types, 
                                         gboolean include_types, 
                                         gint results_limit, 
@@ -233,7 +233,7 @@ isymbol_manager_search_symbol_in_scope (IAnjutaSymbolManager *sm,
 
 IAnjutaIterable*
 isymbol_manager_get_symbol_more_info (IAnjutaSymbolManager *sm,
-								  const IAnjutaSymbol *symbol, 
+								  IAnjutaSymbol *symbol, 
 								  IAnjutaSymbolField info_fields,
 								  GError **err)
 {
@@ -503,7 +503,7 @@ isymbol_manager_search_project_async (IAnjutaSymbolManager *sm, IAnjutaSymbolTyp
 IAnjutaIterable* 
 isymbol_manager_search_file (IAnjutaSymbolManager *sm, IAnjutaSymbolType match_types, 
 				gboolean include_types,  IAnjutaSymbolField info_fields, const gchar *pattern, 
-			 	const GFile *file, gint results_limit, gint results_offset, GError **err)
+			 	GFile *file, gint results_limit, gint results_offset, GError **err)
 {
 	SymbolDBPlugin *sdb_plugin;
 	SymbolDBEngine *dbe;
@@ -542,7 +542,7 @@ isymbol_manager_search_file (IAnjutaSymbolManager *sm, IAnjutaSymbolType match_t
 guint
 isymbol_manager_search_file_async (IAnjutaSymbolManager *sm, IAnjutaSymbolType match_types, 
 				gboolean include_types,  IAnjutaSymbolField info_fields, const gchar *pattern,     			
-			 	const GFile *file, gint results_limit, gint results_offset, 
+			 	GFile *file, gint results_limit, gint results_offset, 
                 GCancellable* cancel, AnjutaAsyncNotify *notify, 
                 IAnjutaSymbolManagerSearchCallback callback, 
                 gpointer callback_user_data, GError **err)

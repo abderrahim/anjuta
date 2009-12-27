@@ -342,7 +342,7 @@ idebugger_get_state (IAnjutaDebugger *plugin, GError **err)
 
 static gboolean
 idebugger_load (IAnjutaDebugger *plugin, const gchar *file, const gchar* mime_type,
-				const GList *search_dirs, GError **err)
+				GList *search_dirs, GError **err)
 {
 	GdbPlugin *this = ANJUTA_PLUGIN_GDB (plugin);
 	gboolean is_libtool = FALSE;
@@ -411,7 +411,7 @@ idebugger_set_environment (IAnjutaDebugger *plugin, gchar **variables, GError **
 }
 
 static gboolean
-idebugger_attach (IAnjutaDebugger *plugin, pid_t pid, const GList *search_dirs, GError **err)
+idebugger_attach (IAnjutaDebugger *plugin, pid_t pid, GList *search_dirs, GError **err)
 {
 	GdbPlugin *this = ANJUTA_PLUGIN_GDB (plugin);
 

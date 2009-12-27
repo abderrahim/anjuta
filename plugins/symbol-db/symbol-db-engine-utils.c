@@ -240,7 +240,7 @@ sdb_util_load_symbol_pixbufs ()
 	CREATE_SYM_ICON ("globalglobal", "element-event-16.png");
 }
 
-const GdkPixbuf* 
+GdkPixbuf* 
 symbol_db_util_get_pixbuf  (const gchar *node_type, const gchar *node_access)
 {
 	gchar *search_node;

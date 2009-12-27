@@ -121,7 +121,7 @@ on_error (DebuggerJs *self, const gchar *text, gpointer user_data)
 
 static gboolean
 idebugger_load (IAnjutaDebugger *plugin, const gchar *file, const gchar* mime_type,
-				const GList *search_dirs, GError **err)
+				GList *search_dirs, GError **err)
 {
 	DEBUG_PRINT ("%s", "load: Implemented");
 
@@ -164,7 +164,7 @@ idebugger_set_environment (IAnjutaDebugger *plugin, gchar **variables, GError **
 }
 
 static gboolean
-idebugger_attach (IAnjutaDebugger *plugin, pid_t pid, const GList *search_dirs, GError **err)
+idebugger_attach (IAnjutaDebugger *plugin, pid_t pid, GList *search_dirs, GError **err)
 {
 	DEBUG_PRINT ("%s", "attach: Not Implemented");
 
