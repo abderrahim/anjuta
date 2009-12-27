@@ -675,7 +675,7 @@ on_dma_sharedlib_event (DmaDebuggerQueue *self)
 
 /* Command callback will add their commands at the beginning of the queue */
 void
-dma_debugger_queue_command_callback (const gpointer data, gpointer user_data, GError* err)
+dma_debugger_queue_command_callback (const gpointer data, GError* err, gpointer user_data)
 {
 	DmaDebuggerQueue *self = (DmaDebuggerQueue *)user_data;
 

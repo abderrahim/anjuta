@@ -57,7 +57,7 @@ struct _Locals
 };
 
 static void
-locals_updated (const gpointer data, gpointer user_data, GError *error)
+locals_updated (const gpointer data, GError *error, gpointer user_data)
 {
 	const GList *list = (const GList *)data;
 	Locals *self = (Locals*) user_data;

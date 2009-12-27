@@ -58,7 +58,7 @@ struct _DmaMemory
  *---------------------------------------------------------------------------*/
 
 static void
-on_memory_block_read (const IAnjutaDebuggerMemoryBlock *block, DmaMemory *mem, GError *err)
+on_memory_block_read (const IAnjutaDebuggerMemoryBlock *block, GError *err, DmaMemory *mem)
 {
 	const gchar* tag;
 	

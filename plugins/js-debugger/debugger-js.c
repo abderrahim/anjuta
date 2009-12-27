@@ -380,34 +380,34 @@ on_data_arrived (DebuggerServer *server, gpointer user_data)
 			switch (task->task_type)
 			{
 				case SIGNAL:
-					task->callback (NULL, task->user_data, NULL);
+					task->callback (NULL, NULL, task->user_data);
 					break;
 				case VARIABLE_CREATE:
 					result = variable_create (object, task);
-					task->callback (result, task->user_data, NULL);
+					task->callback (result, NULL, task->user_data);
 					break;
 				case INFO_THREAD:
 					result = info_thread (object, task);
-					task->callback (result, task->user_data, NULL);
+					task->callback (result, NULL, task->user_data);
 					break;
 				case LIST_THREAD:
 					result = list_thread (object, task);
-					task->callback (result, task->user_data, NULL);
+					task->callback (result, NULL, task->user_data);
 					break;
 				case LIST_FRAME:
 					result = list_frame (object, task);
-					task->callback (result, task->user_data, NULL);
+					task->callback (result, NULL, task->user_data);
 					break;
 				case LIST_LOCAL:
 					result = list_local (object, task);
-					task->callback (result, task->user_data, NULL);
+					task->callback (result, NULL, task->user_data);
 					break;
 				case BREAKPOINT_LIST:
-					task->callback (priv->breakpoint, task->user_data, NULL);//TODO: Return Copy
+					task->callback (priv->breakpoint, NULL, task->user_data);//TODO: Return Copy
 					break;
 				case VARIABLE_LIST_CHILDREN:
 					result = varibale_list_children (object, task);
-					task->callback (result, task->user_data, NULL);
+					task->callback (result, NULL, task->user_data);
 					break;
 				default:
 					printf ("%d\n", task->task_type);

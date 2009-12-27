@@ -706,7 +706,7 @@ breakpoints_dbase_find_breakpoint (BreakpointsDBase *bd, const IAnjutaDebuggerBr
  *---------------------------------------------------------------------------*/
 
 static void
-on_breakpoint_callback (const gpointer data, gpointer breakpoint, GError* err);
+on_breakpoint_callback (const gpointer data, GError* err, gpointer breakpoint);
 
 static gboolean
 breakpoints_dbase_remove_in_debugger (BreakpointsDBase *bd, BreakpointItem *bi)
@@ -842,7 +842,7 @@ breakpoints_dbase_update_in_debugger (BreakpointsDBase *bd, BreakpointItem *bi)
 }
 
 static void
-on_breakpoint_callback (const gpointer data, gpointer user_data, GError* err)
+on_breakpoint_callback (const gpointer data, GError* err, gpointer user_data)
 {
 	const IAnjutaDebuggerBreakpointItem* bp = (const IAnjutaDebuggerBreakpointItem*)data;
 	BreakpointItem *bi = (BreakpointItem *)user_data;
@@ -913,7 +913,7 @@ gboolean on_update_breakpoint_in_ui (GtkTreeModel *model, GtkTreePath *path,
 }
 
 static void
-on_breakpoint_list_callback (const gpointer data, gpointer user_data, GError* err)
+on_breakpoint_list_callback (const gpointer data, GError* err, gpointer user_data)
 {
 	GList *list = (GList *)data;
 	BreakpointsDBase *bd = (BreakpointsDBase *)user_data;	

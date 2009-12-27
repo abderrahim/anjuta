@@ -739,7 +739,7 @@ on_debugger_custom_command_activate (GtkAction * action, DebugManagerPlugin *plu
  *---------------------------------------------------------------------------*/
 
 static void
-on_debugger_dialog_message (const gpointer data, gpointer user_data, GError* error)
+on_debugger_dialog_message (const gpointer data, GError* error, gpointer user_data)
 {
 	const GList *cli_result = data;
 	GtkWindow *parent = GTK_WINDOW (user_data);

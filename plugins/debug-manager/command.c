@@ -1111,7 +1111,7 @@ dma_command_cancel (DmaQueueCommand *cmd)
 
 	if (cmd->callback != NULL)
 	{
-		cmd->callback (NULL, cmd->user_data, err);
+		cmd->callback (NULL, err, cmd->user_data);
 	}
 	
 	g_error_free (err);
@@ -1136,7 +1136,7 @@ dma_command_is_breakpoint_pending (DmaQueueCommand *cmd)
 
 	if (cmd->callback != NULL)
 	{
-		cmd->callback (NULL, cmd->user_data, err);
+		cmd->callback (NULL, err, cmd->user_data);
 	}
 	g_error_free (err);
 	
@@ -1433,7 +1433,7 @@ dma_command_callback (DmaQueueCommand *cmd, const gpointer data, GError *err)
 	case UPDATE_VARIABLE:
 		if (cmd->callback != NULL)
 		{
-			cmd->callback (data, cmd->user_data, err);	
+			cmd->callback (data, err, cmd->user_data);
 		}
 		break;
 	}

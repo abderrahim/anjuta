@@ -194,7 +194,7 @@ dma_thread_clear_all_stack_trace (StackTrace *self)
 }
 
 static void
-on_stack_trace_updated (const GList *stack, gpointer user_data, GError *error)
+on_stack_trace_updated (const GList *stack, GError *error, gpointer user_data)
 {
 	StackTrace *self = (StackTrace *)user_data;
 	const GList *node;

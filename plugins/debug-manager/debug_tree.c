@@ -497,8 +497,7 @@ destroy_deleted (DebugTree *tree, GtkTreeModel* model)
 /*---------------------------------------------------------------------------*/
 
 static void
-gdb_var_evaluate_expression (const gchar *value,
-                        gpointer user_data, GError* err)
+gdb_var_evaluate_expression (const gchar *value, GError* err, gpointer user_data)
 {
 	DmaVariablePacket *pack = (DmaVariablePacket *) user_data;
 	GtkTreeIter iter;
@@ -521,7 +520,7 @@ gdb_var_evaluate_expression (const gchar *value,
 }
 
 static void
-gdb_var_list_children (const GList *children, gpointer user_data, GError *err)
+gdb_var_list_children (const GList *children, GError *err, gpointer user_data)
 {
 	DmaVariablePacket *pack = (DmaVariablePacket *) user_data;
 	GtkTreeIter iter;
@@ -544,7 +543,7 @@ gdb_var_list_children (const GList *children, gpointer user_data, GError *err)
 }
 
 static void
-gdb_var_create (IAnjutaDebuggerVariableObject *variable, gpointer user_data, GError *err)
+gdb_var_create (IAnjutaDebuggerVariableObject *variable, GError *err, gpointer user_data)
 {
 	DmaVariablePacket *pack = (DmaVariablePacket *) user_data;
 	GtkTreeIter iter;
@@ -1175,7 +1174,7 @@ debug_tree_update_real (DebugTree* tree, GtkTreeIter* iter, gboolean force)
 }
 
 static void
-on_debug_tree_update_all (const GList *change, gpointer user_data, GError* err)
+on_debug_tree_update_all (const GList *change, GError* err, gpointer user_data)
 {
 	DebugTree *tree = (DebugTree *)user_data;
 	GtkTreeModel *model;

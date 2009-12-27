@@ -387,7 +387,7 @@ dma_disassembly_iter_round (DmaSparseIter *iter, gboolean round_up)
 }
 
 static void
-on_disassemble (const IAnjutaDebuggerInstructionDisassembly *block, DmaSparseBufferTransport *trans, GError *err)
+on_disassemble (const IAnjutaDebuggerInstructionDisassembly *block, GError *err, DmaSparseBufferTransport *trans)
 {
 	DmaDisassemblyBufferNode *node;
 	DmaDisassemblyBuffer *buffer = (DmaDisassemblyBuffer *)trans->buffer;

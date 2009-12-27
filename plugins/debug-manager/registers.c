@@ -111,7 +111,7 @@ on_copy_register_name (GtkTreeModel *model,
 }
 
 static void
-on_cpu_registers_updated (const GList *registers, gpointer user_data, GError *error)
+on_cpu_registers_updated (const GList *registers, GError *error, gpointer user_data)
 {
 	CpuRegisters *self = (CpuRegisters *)user_data;
 	const GList *node;
