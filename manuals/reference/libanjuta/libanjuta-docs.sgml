@@ -64,8 +64,6 @@
     <xi:include href="xml/anjuta-serializer.xml"/>
     <xi:include href="xml/anjuta-session.xml"/>
     <xi:include href="xml/anjuta-utils.xml"/>
-    <xi:include href="xml/anjuta-marshal.xml"/>
-    <xi:include href="xml/anjuta-enum-types.xml"/>
     <xi:include href="xml/resources.xml"/>
     <xi:include href="xml/anjuta-encodings.xml"/>
     <xi:include href="xml/anjuta-debug.xml"/>
@@ -83,7 +81,6 @@
     <title>libanjuta internal API</title>
     <xi:include href="xml/anjuta-c-plugin-factory.xml"/>
     <xi:include href="xml/anjuta-c-module.xml"/>
-    <xi:include href="xml/anjuta-utils-priv.xml"/>
     <xi:include href="xml/e-splash.xml"/>
     <xi:include href="xml/cell-renderer-captioned-image.xml"/>
   </chapter>
@@ -147,7 +144,6 @@
 	<xi:include href="xml/ianjuta-todo.xml"/>
 	<xi:include href="xml/ianjuta-vcs.xml"/>
 	<xi:include href="xml/ianjuta-wizard.xml"/>
-    <xi:include href="xml/libanjuta-iface-marshallers.xml"/>
   </chapter>
 
   <chapter id="object-hierarchy">

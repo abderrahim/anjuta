@@ -31,7 +31,7 @@ public interface IAnjuta.DebuggerInstruction : Debugger
 	 * @address: Start address of the memory block
 	 * @length: Length of memory block
 	 * @callback: Call back with a IAnjutaDebuggerInstructionDisassembly as argument
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Disassemble a part of the memory

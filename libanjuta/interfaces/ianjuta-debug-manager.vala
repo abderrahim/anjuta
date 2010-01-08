@@ -15,7 +15,7 @@ public interface IAnjuta.DebugManager
 	/* Signals */
 
 	/**
-	 * IAnjutaDebugManager::debugger_started:
+	 * IAnjutaDebugManager::debugger-started:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the debugger is started.
@@ -23,7 +23,7 @@ public interface IAnjuta.DebugManager
 	public signal void debugger_started ();
 
 	/**
-	* IAnjutaDebugManager::debugger_stopped:
+	* IAnjutaDebugManager::debugger-stopped:
 	* @self: Self
 	* @error: Error propagation and reporting.
 	*
@@ -32,7 +32,7 @@ public interface IAnjuta.DebugManager
 	public signal void debugger_stopped (Error err);
 
 	/**
-	 * IAnjutaDebugManager::program_loaded:
+	 * IAnjutaDebugManager::program-loaded:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a program is loaded most of the
@@ -41,7 +41,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_loaded ();
 
 	/**
-	 * IAnjutaDebugManager::program_unloaded:
+	 * IAnjutaDebugManager::program-unloaded:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a program is unloaded. If the
@@ -51,7 +51,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_unloaded ();
 
 	/**
-	 * IAnjutaDebugManager::program_started:
+	 * IAnjutaDebugManager::program-started:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program is started. If the
@@ -62,7 +62,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_started ();
 
 	/**
-	 * IAnjutaDebugManager::program_exited:
+	 * IAnjutaDebugManager::program-exited:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program is unloaded. If the
@@ -72,7 +72,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_exited ();
 
 	/**
-	 * IAnjutaDebugManager::program_stopped:
+	 * IAnjutaDebugManager::program-stopped:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program is stopped.
@@ -80,7 +80,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_stopped ();
 
 	/**
-	 * IAnjutaDebugManager::program_running:
+	 * IAnjutaDebugManager::program-running:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program is running.
@@ -88,7 +88,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_running ();
 
 	/**
-	 * IAnjutaDebugManager::sharedlib_event:
+	 * IAnjutaDebugManager::sharedlib-event:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new shared library is loaded. It
@@ -98,7 +98,7 @@ public interface IAnjuta.DebugManager
 	public signal void sharedlib_event ();
 
 	/**
-	 * IAnjutaDebugManager::program_moved:
+	 * IAnjutaDebugManager::program-moved:
 	 * @self: Self
 	 * @pid: process id, 0 when unknown
 	 * @tid: thread id, 0 when unknown
@@ -113,7 +113,7 @@ public interface IAnjuta.DebugManager
 	public signal void program_moved (int pid, int tid, ulong address, string? file, uint line);
 
 	/**
-	 * IAnjutaDebugManager::frame_changed:
+	 * IAnjutaDebugManager::frame-changed:
 	 * @self: Self
 	 * @frame: frame
 	 * @thread: thread
@@ -127,7 +127,7 @@ public interface IAnjuta.DebugManager
 	public signal void frame_changed (uint frame, int thread);
 
 	/**
-	 * IAnjutaDebugManager::location_changed:
+	 * IAnjutaDebugManager::location-changed:
 	 * @self: Self
 	 * @address: program counter address, 0 when unknown
 	 * @uri: source file where is the program counter, NULL when unknown
@@ -140,7 +140,7 @@ public interface IAnjuta.DebugManager
 	public signal void location_changed (ulong address, string? uri, uint line);
 
 	/**
-	 * IAnjutaDebugManager::signal_received:
+	 * IAnjutaDebugManager::signal-received:
 	 * @self: Self
 	 * @name: Signal name
 	 * @description: Signal description
@@ -151,7 +151,7 @@ public interface IAnjuta.DebugManager
 	public signal void signal_received (string name, string description);
 
 	/**
-	 * IAnjutaDebugManager::breakpoint_changed:
+	 * IAnjutaDebugManager::breakpoint-changed:
 	 * @self: Self
 	 * @breakpoint: Breakpoint
 	 * @error: Error propagation and reporting.

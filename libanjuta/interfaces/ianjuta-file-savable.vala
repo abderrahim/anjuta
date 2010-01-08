@@ -12,7 +12,7 @@
 public interface IAnjuta.FileSavable : IAnjuta.File
 {
 	/**
-	 * IAnjutaFileSavable::update_save_ui:
+	 * IAnjutaFileSavable::update-save-ui:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the state of the file has

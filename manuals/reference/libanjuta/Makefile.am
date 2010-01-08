@@ -24,7 +24,7 @@ SCAN_OPTIONS=
 
 # Extra options to supply to gtkdoc-mkdb.
 # e.g. MKDB_OPTIONS=--sgml-mode --output-format=xml
-MKDB_OPTIONS=--sgml-mode --output-format=xml
+MKDB_OPTIONS=--sgml-mode --output-format=xml --source-suffixes c,vala
 
 # Extra options to supply to gtkdoc-mktmpl
 # e.g. MKTMPL_OPTIONS=--only-section-tmpl
@@ -38,7 +38,7 @@ FIXXREF_OPTIONS=
 # e.g. HFILE_GLOB=$(top_srcdir)/gtk/*.h
 # e.g. CFILE_GLOB=$(top_srcdir)/gtk/*.c
 HFILE_GLOB=$(top_srcdir)/libanjuta/*.h $(top_srcdir)/libanjuta/interfaces/*.h
-CFILE_GLOB=$(top_srcdir)/libanjuta/*.c $(top_srcdir)/libanjuta/interfaces/*.c
+CFILE_GLOB=$(top_srcdir)/libanjuta/*.c $(top_srcdir)/libanjuta/interfaces/*.vala
 
 # Header files to ignore when scanning.
 # e.g. IGNORE_HFILES=gtkdebug.h gtkintl.h

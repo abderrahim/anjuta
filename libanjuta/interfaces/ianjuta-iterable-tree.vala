@@ -48,7 +48,7 @@ public interface IAnjuta.IterableTree : Iterable
 	 * ianjuta_iterable_tree_foreach_post:
 	 * @self: Self
 	 * @callback: Callback to call for each element.
-	 * @user_data: User data to pass back to callback.
+	 * @callback_target: User data to pass back to callback.
 	 * @error: Error propagation and reporting
 	 *
 	 * Call callback for each element in post order.
@@ -59,7 +59,7 @@ public interface IAnjuta.IterableTree : Iterable
 	 * ianjuta_iterable_tree_foreach_pre:
 	 * @self: Self
 	 * @callback: Callback to call for each element.
-	 * @user_data: User data to pass back to callback.
+	 * @callback_target: User data to pass back to callback.
 	 * @error: Error propagation and reporting
 	 *
 	 * Call callback for each element in pre order.

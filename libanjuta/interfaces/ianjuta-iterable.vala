@@ -67,7 +67,7 @@ public interface IAnjuta.Iterable : Object
 	 * ianjuta_iterable_foreach:
 	 * @self: Self
 	 * @callback: Callback to call for each element.
-	 * @user_data: user data that is passed back to the callback.
+	 * @callback_target: user data that is passed back to the callback.
 	 * @error: Error propagation and reporting
 	 *
 	 * Call callback for each element in the list. Call back is passed the

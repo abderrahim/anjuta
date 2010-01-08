@@ -31,7 +31,7 @@ public interface IAnjuta.DebuggerVariable : Debugger
 	 * @self: Self
 	 * @expression: Variable expression
 	 * @callback: Callback to call when the variable has been created
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Create a new variable object in the current thread and frame.
@@ -47,7 +47,7 @@ public interface IAnjuta.DebuggerVariable : Debugger
 	 * @name: Variable name
 	 * @callback: Callback to call when the children have been
 	 * created
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * List and create objects for all children of a
@@ -63,7 +63,7 @@ public interface IAnjuta.DebuggerVariable : Debugger
 	 * @self: Self
 	 * @name: Variable name
 	 * @callback: Callback to call with the variable value
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get the value of one variable or child object.
@@ -92,7 +92,7 @@ public interface IAnjuta.DebuggerVariable : Debugger
 	 * @self: Self
 	 * @callback: Callback to call with the list of all changed
 	 * variables
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * List all changed variable objects since the last call.

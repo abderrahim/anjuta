@@ -24,7 +24,7 @@ public interface IAnjuta.DebuggerMemory : Debugger
 	 * @address: Start address of the memory block
 	 * @length: Length of memory block
 	 * @callback: Call back with a IAnjutaDebuggerMemoryBlock as argument
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Read a block of the target memory.

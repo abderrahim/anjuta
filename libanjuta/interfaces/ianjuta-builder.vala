@@ -74,7 +74,7 @@ public interface IAnjuta.Builder : Object
 	 * @self: Self
 	 * @uri: target uri
 	 * @callback: callback called when command is finished
-	 * @user_data: data passed to the callback
+	 * @callback_target: data passed to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Check if the corresponding target is up to date or not. This
@@ -92,7 +92,7 @@ public interface IAnjuta.Builder : Object
 	 * @self: Self
 	 * @uri: target uri
 	 * @callback: callback called when command is finished
-	 * @user_data: data passed to the callback
+	 * @callback_target: data passed to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Build the specified target.

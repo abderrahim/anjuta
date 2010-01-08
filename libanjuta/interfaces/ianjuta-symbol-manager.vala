@@ -10,13 +10,13 @@
 
 /**
  * IAnjutaSymbolManagerSearchFileScope:
- * You cannot use bitwise OR in this parameter.
- *
  * @IANJUTA_SYMBOL_MANAGER_SEARCH_FS_IGNORE: to be ignored (e.g. Will search both private and public scopes).
  * @IANJUTA_SYMBOL_MANAGER_SEARCH_FS_PUBLIC: only global public function will be searched
  * (the ones that _do not_ belong to the file scope).
  * @IANJUTA_SYMBOL_MANAGER_SEARCH_FS_PRIVATE: only private or static (for C language) will be searched
  * (the ones that _do_ belong to the file scope).
+ *
+ * You cannot use bitwise OR in this parameter.
  */
 [CCode (cprefix="IANJUTA_SYMBOL_MANAGER_SEARCH_FS_")]
 public enum IAnjuta.SymbolManagerSearchFileScope
@@ -29,7 +29,7 @@ public enum IAnjuta.SymbolManagerSearchFileScope
 public interface IAnjuta.SymbolManager : Object
 {
 	/**
-	 * IAnjutaSymbolManager::prj_scan_end:
+	 * IAnjutaSymbolManager::prj-scan-end:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a scanning of one or more files on project db
@@ -38,7 +38,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void prj_scan_end (int process_id);
 
 	/**
-	 * IAnjutaSymbolManager::prj_symbol_inserted:
+	 * IAnjutaSymbolManager::prj-symbol-inserted:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new symbol is added to project db.
@@ -47,7 +47,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void prj_symbol_inserted (int symbol_id);
 
 	/**
-	 * IAnjutaSymbolManager::prj_symbol_removed:
+	 * IAnjutaSymbolManager::prj-symbol-removed:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new symbol is removed from project db.
@@ -56,7 +56,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void prj_symbol_removed (int symbol_id);
 
 	/**
-	 * IAnjutaSymbolManager::prj_symbol_updated:
+	 * IAnjutaSymbolManager::prj-symbol-updated:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new symbol is updated on project db.
@@ -76,7 +76,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void prj_symbol_updated (int symbol_id);
 
 	/**
-	 * IAnjutaSymbolManager::sys_scan_end:
+	 * IAnjutaSymbolManager::sys-scan-end:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a scanning of one or more packages on system db
@@ -86,7 +86,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void sys_scan_end (int process_id);
 
 	/**
-	 * IAnjutaSymbolManager::sys_symbol_inserted:
+	 * IAnjutaSymbolManager::sys-symbol-inserted:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new symbol is added to system db.
@@ -95,7 +95,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void sys_symbol_inserted (int symbol_id);
 
 	/**
-	 * IAnjutaSymbolManager::sys_symbol_removed:
+	 * IAnjutaSymbolManager::sys-symbol-removed:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new symbol is removed from system db.
@@ -104,7 +104,7 @@ public interface IAnjuta.SymbolManager : Object
 	public signal void sys_symbol_removed (int symbol_id);
 
 	/**
-	 * IAnjutaSymbolManager::sys_symbol_updated:
+	 * IAnjutaSymbolManager::sys-symbol-updated:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a new symbol is updated on system db.
@@ -195,7 +195,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * @cancel: An optional #GCancellable object to cancel the operation, or NULL.
 	 * @notify: #AnjutaAsyncNotify object for finish notification and error reporting.
 	 * @callback: #SearchCallback callback to call when query result data from database is available
-	 * @callback_user_data: User data passed to callback
+	 * @callback_target: User data passed to callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Async database query. The returned #IAnjutaIterable object must be unreffed after use.
@@ -250,7 +250,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * @cancel: An optional #GCancellable object to cancel the operation, or NULL.
 	 * @notify: #AnjutaAsyncNotify object for finish notification and error reporting.
 	 * @callback: #SearchCallback callback to call when query result data from database is available
-	 * @callback_user_data: User data passed to callback
+	 * @callback_target: User data passed to callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Async database query. The returned #IAnjutaIterable object must be unreffed after use.
@@ -303,7 +303,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * @cancel: An optional #GCancellable object to cancel the operation, or NULL.
 	 * @notify: #AnjutaAsyncNotify object for finish notification and error reporting.
 	 * @callback: #SearchCallback callback to call when query result data from database is available
-	 * @callback_user_data: User data passed to callback
+	 * @callback_target: User data passed to callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Async database query. The returned #IAnjutaIterable object must be unreffed after use.

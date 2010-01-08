@@ -15,9 +15,10 @@
  *
  * This enumeration is used to specify errors.
  */
+[CCode (cprefix="IANJUTA_VCS_")]
 public errordomain IAnjuta.VcsError
 {
-	UNKOWN_ERROR
+	UNKNOWN_ERROR
 }
 
 public interface IAnjuta.Vcs : Object
@@ -62,7 +63,7 @@ public interface IAnjuta.Vcs : Object
 	 * @self: Self
 	 * @file: File/directory to query
 	 * @callback: callback to call when data for a particular file is available
-	 * @user_data: User data passed to callback
+	 * @callback_target: User data passed to callback
 	 * @cancel: An optional #GCancellable object to cancel the operation, or NULL
 	 * @notify: #AnjutaAsyncNotify object for finish notification and error
 	 * reporting.
@@ -87,7 +88,7 @@ public interface IAnjuta.Vcs : Object
      * @self: Self
      * @file: File to diff
      * @callback: Callback to call when diff data becomes available
-     * @user_data: User data passed to @callback
+     * @callback_target: User data passed to @callback
      * @cancel: An optional #GCancellable object to cancel the operation, or NULL
      * @notify: #AnjutaAsyncNotify object for finish notification and error
 	 * reporting.

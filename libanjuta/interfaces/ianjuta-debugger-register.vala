@@ -22,7 +22,7 @@ public interface IAnjuta.DebuggerRegister : Debugger
 	 * ianjuta_debugger_register_list_register:
 	 * @self: Self
 	 * @callback: Callback to call with the register list
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * List all registers of the target. This function can be called without
@@ -37,7 +37,7 @@ public interface IAnjuta.DebuggerRegister : Debugger
 	 * ianjuta_debugger_register_update_register:
 	 * @self: Self
 	 * @callback: Callback call with the list of all modified registers
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Return all modified registers since the last call. Only the num and

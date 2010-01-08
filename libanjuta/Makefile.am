@@ -214,7 +214,7 @@ Anjuta-1.0.gir: $(libanjuta_la_SOURCES) libanjuta.la
 		--output $@ \
 		--pkg-export libanjuta-1.0 \
 		-I$(top_srcdir) -I. \
-		$(libanjuta_la_SOURCES)
+		$(libanjuta_la_SOURCES) $(libanjuta_include)
 
 Anjuta-1.0.typelib: Anjuta-1.0.gir
 	$(INTROSPECTION_COMPILER) $< -o $@

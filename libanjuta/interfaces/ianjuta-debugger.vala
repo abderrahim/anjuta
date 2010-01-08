@@ -98,7 +98,7 @@ public delegate void IAnjuta.DebuggerMemoryCallback (ulong address, uint length,
 public interface IAnjuta.Debugger : Object
 {
 	/**
-	 * IAnjutaDebugger::debugger_started:
+	 * IAnjutaDebugger::debugger-started:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the debugger is started.
@@ -106,7 +106,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void debugger_started ();
 
 	/**
-	 * IAnjutaDebugger::debugger_stopped:
+	 * IAnjutaDebugger::debugger-stopped:
 	 * @self: Self
 	 * @error: Error propagation and reporting.
 	 *
@@ -116,7 +116,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void debugger_stopped (Error err);
 
 	/**
-	 * IAnjutaDebugger::program_loaded:
+	 * IAnjutaDebugger::program-loaded:
 	 * @self: Self
 	 *
 	 * This signal is emitted when a program is loaded.
@@ -124,7 +124,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void program_loaded ();
 
 	/**
-	 * IAnjutaDebugger::program_running:
+	 * IAnjutaDebugger::program-running:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program is running.
@@ -132,7 +132,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void program_running ();
 
 	/**
-	 * IAnjutaDebugger::program_stopped:
+	 * IAnjutaDebugger::program-stopped:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program is interrupted.
@@ -140,7 +140,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void program_stopped ();
 
 	/**
-	 * IAnjutaDebugger::program_exited:
+	 * IAnjutaDebugger::program-exited:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program exits.
@@ -148,7 +148,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void program_exited ();
 
 	/**
-	 * IAnjutaDebugger::sharedlib_event:
+	 * IAnjutaDebugger::sharedlib-event:
 	 * @self: Self
 	 *
 	 * This signal is emitted when the program load a new shared
@@ -157,7 +157,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void sharedlib_event ();
 
 	/**
-	 * IAnjutaDebugger::program_moved:
+	 * IAnjutaDebugger::program-moved:
 	 * @self: Self
 	 * @pid: process id, 0 when unknown
 	 * @tid: thread id, 0 when unknown
@@ -172,7 +172,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void program_moved (int pid, int tid, ulong address, string? file, uint line);
 
 	/**
-	 * IAnjutaDebugger::frame_changed:
+	 * IAnjutaDebugger::frame-changed:
 	 * @self: Self
 	 * @frame: frame number
 	 * @thread: thread number
@@ -182,7 +182,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void frame_changed (uint frame, int thread);
 
 	/**
-	 * IAnjutaDebugger::signal_received:
+	 * IAnjutaDebugger::signal-received:
 	 * @self: Self
 	 * @name: Signal name
 	 * @description: Signal description
@@ -192,7 +192,7 @@ public interface IAnjuta.Debugger : Object
 	public signal void signal_received (string name, string description);
 
 	/**
-	 * IAnjutaDebugger::debugger_ready:
+	 * IAnjutaDebugger::debugger-ready:
 	 * @self: Self
 	 * @state: debugger status
 	 *
@@ -415,7 +415,7 @@ public interface IAnjuta.Debugger : Object
 	 * @self: Self
 	 * @name: variable name
 	 * @callback: Callback to call with variable value
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get back the value of the named variable.
@@ -430,7 +430,7 @@ public interface IAnjuta.Debugger : Object
 	 * @name: variable name
 	 * @value: new variable value
 	 * @callback: Callback to call when the variable has been modified
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Change the value of a variable in the current program.
@@ -442,9 +442,9 @@ public interface IAnjuta.Debugger : Object
 	/**
 	 * ianjuta_debugger_print:
 	 * @self: Self
-	 * @name: variable name
+	 * @variable: variable name
 	 * @callback: Callback to call with variable value
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Display value of a variable, like inspect.
@@ -457,7 +457,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_list_local:
 	 * @self: Self
 	 * @callback: Callback to call with list of local variable
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get the list of local variables
@@ -470,7 +470,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_list_argument:
 	 * @self: Self
 	 * @callback: Callback to call with list of arguments
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get the list of arguments
@@ -483,7 +483,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_signal:
 	 * @self: Self
 	 * @callback: Callback to call with list of arguments
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some informatin about a signal
@@ -496,7 +496,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_sharedlib:
 	 * @self: Self
 	 * @callback: Callback to call with list of arguments
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get information about shared libraries.
@@ -525,7 +525,7 @@ public interface IAnjuta.Debugger : Object
 	 * @self: Self
 	 * @frame: frame number, the top frame has the number 0
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some information about the one stack frame.
@@ -538,7 +538,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_args:
 	 * @self: Self
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some informatin about a current functin arguments.
@@ -551,7 +551,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_target:
 	 * @self: Self
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get back some information about the target
@@ -564,7 +564,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_program:
 	 * @self: Self
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some informatin about a current program.
@@ -577,7 +577,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_udot:
 	 * @self: Self
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some information about OS structures.
@@ -591,7 +591,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_info_variables:
 	 * @self: Self
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some informatin about variables.
@@ -604,7 +604,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_list_frame:
 	 * @self: Self
 	 * @callback: Callback to call getting a list of frame
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get the list of frames.
@@ -629,7 +629,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_list_thread:
 	 * @self: Self
 	 * @callback: Callback to call getting a list of thread
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get the list of threads.
@@ -655,7 +655,7 @@ public interface IAnjuta.Debugger : Object
 	 * @self: Self
 	 * @thread: thread number
 	 * @callback: Callback to call getting a string with all information
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get some information about current threads.
@@ -668,7 +668,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_list_register:
 	 * @self: Self
 	 * @callback: Callback to call getting a list of registers
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Get the list of registers.
@@ -695,7 +695,7 @@ public interface IAnjuta.Debugger : Object
 	 * ianjuta_debugger_callback:
 	 * @self: Self
 	 * @callback: Callback to call
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * All commands are executed asynchronously and give back information

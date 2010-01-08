@@ -72,7 +72,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @file: File containing the breakpoint
 	 * @line: Line number where is the breakpoint
 	 * @callback: Callback to call when the breakpoint has been set
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Set a breakpoint at the specified line in the file.
@@ -88,7 +88,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @self: Self
 	 * @address: Address of the breakpoint
 	 * @callback: Callback to call when the breakpoint has been set
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Set a breakpoint at the specified address.
@@ -105,7 +105,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @file: File containing the breakpoint
 	 * @function: Function name where the breakpoint is put
 	 * @callback: Callback to call when the breakpoint has been set
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Set a breakpoint at the beginning of the specified function.
@@ -121,7 +121,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @self: Self
 	 * @id: Breakpoint identification number
 	 * @callback: Callback to call when the breakpoint has been cleared
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Clear a breakpoint put by any set functions. The Id of the breakpoint
@@ -136,7 +136,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * ianjuta_debugger_breakpoint_list_breakpoint:
 	 * @self: Self
 	 * @callback: Callback to call with the list of breakpoints
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * List all breakpoints set in the debugger. It is useful to
@@ -153,7 +153,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @id: Breakpoint identification number
 	 * @enable: TRUE to enable the breakpoint, FALSE to disable it
 	 * @callback: Callback to call when the breakpoint has been changed
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Enable of disable a breakpoint. This function is optional.
@@ -169,7 +169,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @id: Breakpoint identification number
 	 * @ignore: Number of time a breakpoint must be ignored
 	 * @callback: Callback to call when the breakpoint has been changed
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * This allow to ignore the breakpoint a number of time before stopping.
@@ -186,7 +186,7 @@ public interface IAnjuta.DebuggerBreakpoint : Debugger
 	 * @id: Breakpoint identification number
 	 * @condition: expression that has to be true
 	 * @callback: Callback to call when the breakpoint has been changed
-	 * @user_data: User data that is passed back to the callback
+	 * @callback_target: User data that is passed back to the callback
 	 * @error: Error propagation and reporting.
 	 *
 	 * Add a condition, evaluate in the program context, on the breakpoint,

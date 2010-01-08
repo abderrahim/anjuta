@@ -53,7 +53,7 @@ public interface IAnjuta.ProjectManager : Object
 	public const string CURRENT_URI = "project_manager_current_uri";
 
 	/**
-	 * IAnjutaProjectManager::element_added:
+	 * IAnjutaProjectManager::element-added:
 	 * @self: Self
 	 * @element_uri: fixme
 	 * @error: Error propagation and reporting.
@@ -63,7 +63,7 @@ public interface IAnjuta.ProjectManager : Object
 	public signal void element_added (string element_uri);
 
 	/**
-	 * IAnjutaProjectManager::element_removed:
+	 * IAnjutaProjectManager::element-removed:
 	 * @self: Self
 	 * @element_uri: fixme
 	 * @error: Error propagation and reporting.
@@ -73,7 +73,7 @@ public interface IAnjuta.ProjectManager : Object
 	public signal void element_removed (string element_uri);
 
 	/**
-	 * IAnjutaProjectManager::element_selected:
+	 * IAnjutaProjectManager::element-selected:
 	 * @self: Self
 	 * @element_uri: fixme
 	 * @error: Error propagation and reporting.

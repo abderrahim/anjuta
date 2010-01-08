@@ -10,7 +10,6 @@
 
 /**
  * IAnjutaSymbolType:
- *
  * @IANJUTA_SYMBOL_TYPE_UNDEF: Unknown type. If you have to search for all the known
  * types use this flag because it's quicker than #IANJUTA_SYMBOL_TYPE_MAX.
  * @IANJUTA_SYMBOL_TYPE_CLASS: Class declaration
@@ -67,10 +66,7 @@ public enum IAnjuta.SymbolType
 }
 
 /**
- * IAnjutaSymbolField: Field masks. Used mainly to retrieve the fields of a symbol
- * throught the call to ianjuta_symbol_get_extra_info_string () or the various
- * ianjuta_symbol_manager_* () functions.
- *
+ * IAnjutaSymbolField:
  * @IANJUTA_SYMBOL_FIELD_SIMPLE: With this field you will have name, line of declaration,
  *                               is_file_scope and signature of the symbol.
  * @IANJUTA_SYMBOL_FIELD_FILE_PATH: The path to the file. It's obtained using something like
@@ -91,6 +87,10 @@ public enum IAnjuta.SymbolType
  * @IANJUTA_SYMBOL_FIELD_FILE_INCLUDE: field mainly ignored.
  * @IANJUTA_SYMBOL_FIELD_PROJECT_NAME: the project this symbol belongs to.
  * @IANJUTA_SYMBOL_FIELD_WORKSPACE_NAME: the workspace this symbol belongs to.
+ *
+ * Field masks. Used mainly to retrieve the fields of a symbol
+ * throught the call to ianjuta_symbol_get_extra_info_string () or the various
+ * ianjuta_symbol_manager_* () functions.
  */
 [Flags]
 public enum IAnjuta.SymbolField
@@ -207,7 +207,6 @@ public interface IAnjuta.Symbol : Object
  	 * @sym_info: Just one IANJUTA_SYMBOL_FIELD_* per time. It is NOT possible to pass something like
 	 * FIELD_1 | FIELD_2 | ....
 	 * Note: You will not have anything passing IANJUTA_SYMBOL_FIELD_SIMPLE, just a NULL value.
-	 *
 	 * @error: Error propagation and reporting.
 	 *
 	 * Returns: a string representation of the field required. For instance passing

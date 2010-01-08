@@ -10,7 +10,7 @@
 public interface IAnjuta.Terminal
 {
 	/**
-	 * IAnjutaTerminal::child_exited:
+	 * IAnjutaTerminal::child-exited:
 	 * @self: Self
 	 * @pid: pid of terminated child
 	 * @status: status of terminated child as returned by waitpid
