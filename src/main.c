@@ -33,7 +33,7 @@
 #include <unique/unique.h>
 #include <libanjuta/resources.h>
 #include <libanjuta/anjuta-debug.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "anjuta.h"
 

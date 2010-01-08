@@ -24,8 +24,7 @@
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/anjuta-save-prompt.h>
 #include <libanjuta/anjuta-plugin-manager.h>
-#include <libanjuta/interfaces/ianjuta-file-loader.h>
-#include <libanjuta/interfaces/ianjuta-file.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "anjuta.h"
 

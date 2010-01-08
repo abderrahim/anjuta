@@ -31,7 +31,7 @@
 
 #include <libanjuta/anjuta-utils.h>
 #include <libanjuta/resources.h>
-#include <libanjuta/interfaces/ianjuta-preferences.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 
 #include "anjuta-app.h"
 #include "about.h"
