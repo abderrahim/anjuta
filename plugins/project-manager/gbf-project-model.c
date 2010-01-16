@@ -29,18 +29,19 @@
 #include <glib-object.h>
 #include <gtk/gtk.h>
 #include <glib/gi18n.h>
+#include <gio/gio.h>
 
+#include "gbf-project-util.h"
 #include "gbf-project-model.h"
 
 
 struct _GbfProjectModelPrivate {
-	GbfProject          *proj;
+	IAnjutaProject      *proj;
 	gulong               project_updated_handler;
 	
 	GtkTreeRowReference *root_row;
 	GList               *shortcuts;
 
-	GbfTreeData         *empty_node;
 };
 
 enum {
@@ -57,7 +58,7 @@ static void     gbf_project_model_drag_source_init   (GtkTreeDragSourceIface *if
 static void     gbf_project_model_drag_dest_init     (GtkTreeDragDestIface   *iface);
 
 static void     load_project                         (GbfProjectModel        *model,
-						      GbfProject             *proj);
+						      IAnjutaProject         *proj);
 static void     insert_empty_node                    (GbfProjectModel        *model);
 static void     unload_project                       (GbfProjectModel        *model);
 
@@ -87,6 +88,27 @@ static GtkTreeStoreClass *parent_class = NULL;
 
 
 /* Implementation ---------------- */
+
+/* Helper functions */
+
+static void
+my_gtk_tree_model_foreach_child (GtkTreeModel *const model,
+                           GtkTreeIter *const parent,
+                           GtkTreeModelForeachFunc func,
+                           gpointer user_data)
+{
+  GtkTreeIter iter;
+  gboolean success = gtk_tree_model_iter_children(model, &iter, parent);
+  while(success)
+  {
+    if(gtk_tree_model_iter_has_child(model, &iter))
+        my_gtk_tree_model_foreach_child (model, &iter, func, NULL);
+
+        success = (!func(model, NULL, &iter, user_data) &&
+               gtk_tree_model_iter_next (model, &iter));
+  }
+}
+
 
 /* Type & interfaces initialization */
 
@@ -195,11 +217,6 @@ dispose (GObject *obj)
 {
 	GbfProjectModel *model = GBF_PROJECT_MODEL (obj);
 
-	if (model->priv->empty_node) {
-		gbf_tree_data_free (model->priv->empty_node);
-		model->priv->empty_node = NULL;
-	}
-	
 	if (model->priv->proj) {
 		unload_project (model);
 	}
@@ -240,7 +257,7 @@ gbf_project_model_instance_init (GbfProjectModel *model)
 {
 	static GType types [GBF_PROJECT_MODEL_NUM_COLUMNS];
 
-	types [GBF_PROJECT_MODEL_COLUMN_DATA] = GBF_TYPE_TREE_DATA;
+	types [GBF_PROJECT_MODEL_COLUMN_DATA] = G_TYPE_POINTER;
 
 	gtk_tree_store_set_column_types (GTK_TREE_STORE (model),
 					 GBF_PROJECT_MODEL_NUM_COLUMNS,
@@ -248,7 +265,6 @@ gbf_project_model_instance_init (GbfProjectModel *model)
 
 	model->priv = g_new0 (GbfProjectModelPrivate, 1);
 
-	model->priv->empty_node = gbf_tree_data_new_string (_("No project loaded"));
 	/* sorting function */
 	gtk_tree_sortable_set_default_sort_func (GTK_TREE_SORTABLE (model),
 						 default_sort_func,
@@ -261,6 +277,44 @@ gbf_project_model_instance_init (GbfProjectModel *model)
 }
 
 /* Model data functions ------------ */
+
+static gboolean
+gbf_project_model_remove (GbfProjectModel *model, GtkTreeIter *iter)
+{
+	GtkTreeIter child;
+	GbfTreeData *data;
+	gboolean valid;
+
+	/* Free all children */
+	valid = gtk_tree_model_iter_children (GTK_TREE_MODEL (model), &child, iter);
+	while (valid)
+	{
+		valid = gbf_project_model_remove (model, &child);
+	}
+	
+	gtk_tree_model_get (model, iter,
+		    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
+		    -1);
+	valid = gtk_tree_store_remove (GTK_TREE_STORE (model), iter);
+	if (data != NULL) gbf_tree_data_free (data);
+
+	return valid;
+}
+
+
+static void
+gbf_project_model_clear (GbfProjectModel *model)
+{
+	GtkTreeIter child;
+	GbfTreeData *data;
+	gboolean valid;
+
+	valid = gtk_tree_model_iter_children (GTK_TREE_MODEL (model), &child, NULL);
+	while (valid)
+	{
+		valid = gbf_project_model_remove (model, &child);
+	}
+}
 
 static gint 
 default_sort_func (GtkTreeModel *model,
@@ -279,17 +333,26 @@ default_sort_func (GtkTreeModel *model,
 			    -1);
 
 	if (data_a->is_shortcut && data_b->is_shortcut) {
-		GList *l;
+		GtkTreeIter iter;
+		gboolean valid;
 		
 		/* special case: the order of shortcuts is
 		 * user customizable */
-		for (l = GBF_PROJECT_MODEL (model)->priv->shortcuts; l; l = l->next) {
-			if (!strcmp (l->data, data_a->id)) {
+		for (valid = gtk_tree_model_get_iter_first (GTK_TREE_MODEL (model), &iter);
+		    valid == TRUE;
+		    valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (model), &iter))
+		{
+			GbfTreeData *data;
+			
+			gtk_tree_model_get (model, &iter,
+				    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
+				    -1);
+			if (data == data_a) {
 				/* a comes first */
 				retval = -1;
 				break;
 			}
-			else if (!strcmp (l->data, data_b->id)) {
+			else if (data == data_b) {
 				/* b comes first */
 				retval = 1;
 				break;
@@ -314,77 +377,39 @@ default_sort_func (GtkTreeModel *model,
 		}
 	}
 	
-	gbf_tree_data_free (data_a);
-	gbf_tree_data_free (data_b);
-	
 	return retval;
 }
 
 
 static void 
-add_source (GbfProjectModel *model,
-	    const gchar     *source_id,
-	    GtkTreeIter     *parent)
+add_source (GbfProjectModel    	      *model,
+	    AnjutaProjectSource *source,
+	    GtkTreeIter               *parent)
 {
-	GbfProjectTargetSource *source;
 	GtkTreeIter iter;
 	GbfTreeData *data;
-	
-	source = gbf_project_get_source (model->priv->proj, source_id, NULL);
-	if (!source)
+
+	if ((!source) || (anjuta_project_node_get_type (source) != ANJUTA_PROJECT_SOURCE))
 		return;
 	
-	data = gbf_tree_data_new_source (model->priv->proj, source);
+	data = gbf_tree_data_new_source (source);
 	gtk_tree_store_append (GTK_TREE_STORE (model), &iter, parent);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &iter, 
 			    GBF_PROJECT_MODEL_COLUMN_DATA, data,
 			    -1);
-	gbf_tree_data_free (data);
-
-	gbf_project_target_source_free (source);
-}
-
-static GtkTreePath *
-find_shortcut (GbfProjectModel *model, const gchar *target_id)
-{
-	GList *l;
-	gint i;
-	
-	for (l = model->priv->shortcuts, i = 0; l; l = l->next, i++) {
-		if (!strcmp (target_id, l->data))
-			return gtk_tree_path_new_from_indices (i, -1);
-	}
-	return NULL;
-}
-
-static void
-remove_shortcut (GbfProjectModel *model, const gchar *target_id)
-{
-	GList *l;
-	
-	for (l = model->priv->shortcuts; l; l = l->next) {
-		if (!strcmp (target_id, l->data)) {
-			g_free (l->data);
-			model->priv->shortcuts = g_list_delete_link (
-				model->priv->shortcuts, l);
-			break;
-		}
-	}
 }
 
 static void 
 add_target_shortcut (GbfProjectModel *model,
-		     const gchar     *target_id,
+		     GbfTreeData     *target,
 		     GtkTreePath     *before_path)
 {
-	GList *l;
+	AnjutaProjectNode *node;
 	GtkTreeIter iter, sibling;
-	GbfProjectTarget *target;
-	GtkTreePath *root_path, *old_path;
-	gint *path_indices, i;
+	GtkTreePath *root_path;
 	GbfTreeData *data;
+	AnjutaProjectNode *parent;
 	
-	target = gbf_project_get_target (model->priv->proj, target_id, NULL);
 	if (!target)
 		return;
 
@@ -401,150 +426,137 @@ add_target_shortcut (GbfProjectModel *model,
 		gtk_tree_path_free (root_path);
 		return;
 	}
-	
-	path_indices = gtk_tree_path_get_indices (before_path);
-	i = path_indices [0];
 
-	/* remove the old shortcut to make sorting actually work */
-	old_path = find_shortcut (model, target_id);
-	if (old_path) {
-		remove_shortcut (model, target_id);
-		if (gtk_tree_path_compare (old_path, before_path) < 0) {
-			/* adjust shortcut insert position if the old
-			 * index was before the new site */
-			i--;
-		}
-		gtk_tree_path_free (old_path);
+	if (target->type != GBF_TREE_NODE_SHORTCUT)
+	{
+		data = gbf_tree_data_new_shortcut (target);
 	}
-			
-	/* add entry to the shortcut list */
-	model->priv->shortcuts = g_list_insert (model->priv->shortcuts,
-						g_strdup (target->id), i);
-	
-	data = gbf_tree_data_new_target (model->priv->proj, target);
-	data->is_shortcut = TRUE;
+	else
+	{
+		data = target;
+	}
 	gtk_tree_store_insert_before (GTK_TREE_STORE (model), &iter, NULL, &sibling);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &iter, 
 			    GBF_PROJECT_MODEL_COLUMN_DATA, data,
 			    -1);
-	gbf_tree_data_free (data);
 	
 	/* add sources */
-	for (l = target->sources; l; l = l->next)
-		add_source (model, l->data, &iter);
+	parent = gbf_tree_data_get_node (target, model->priv->proj);
+	for (node = anjuta_project_node_first_child (parent); node; node = anjuta_project_node_next_sibling (node))
+		add_source (model, node, &iter);
 
 	gtk_tree_path_free (root_path);
-	gbf_project_target_free (target);
 }
 
 static void 
-add_target (GbfProjectModel *model,
-	    const gchar     *target_id,
-	    GtkTreeIter     *parent)
+move_target_shortcut (GbfProjectModel *model,
+		     GtkTreeIter     *iter,
+    		     GbfTreeData     *shortcut,
+		     GtkTreePath     *before_path)
 {
-	GbfProjectTarget *target;
-	GList *l;
+	AnjutaProjectNode *node;
+	GtkTreeIter sibling;
+	GtkTreePath *root_path;
+	GtkTreePath *src_path;
+	AnjutaProjectNode *parent;
+	
+	if (!shortcut)
+		return;
+
+	root_path = gtk_tree_row_reference_get_path (model->priv->root_row);
+	/* check before_path */
+	if (!before_path ||
+	    gtk_tree_path_get_depth (before_path) > 1 ||
+	    gtk_tree_path_compare (before_path, root_path) > 0) {
+		before_path = root_path;
+	}
+		
+	/* get the tree iter for the row before which to insert the shortcut */
+	if (!gtk_tree_model_get_iter (GTK_TREE_MODEL (model), &sibling, before_path)) {
+		gtk_tree_path_free (root_path);
+		return;
+	}
+
+	src_path = gtk_tree_model_get_path (GTK_TREE_MODEL (model), iter);
+	if (gtk_tree_path_compare (src_path, before_path) != 0)
+	{
+		gtk_tree_store_remove (GTK_TREE_STORE (model), iter);			
+		gtk_tree_store_insert_before (GTK_TREE_STORE (model), iter, NULL, &sibling);
+		gtk_tree_store_set (GTK_TREE_STORE (model), iter, 
+				    GBF_PROJECT_MODEL_COLUMN_DATA, shortcut,
+				    -1);
+
+		/* add sources */
+		parent = gbf_tree_data_get_node (shortcut->shortcut, model->priv->proj);
+		for (node = anjuta_project_node_first_child (parent); node; node = anjuta_project_node_next_sibling (node))
+			add_source (model, node, iter);
+	}
+
+	gtk_tree_path_free (src_path);
+	gtk_tree_path_free (root_path);
+
+}
+
+static void 
+add_target (GbfProjectModel 		*model,
+	    AnjutaProjectTarget   *target,
+	    GtkTreeIter     	        *parent)
+{
+	AnjutaProjectNode *l;
 	GtkTreeIter iter;	
 	GbfTreeData *data;
 	
-	target = gbf_project_get_target (model->priv->proj, target_id, NULL);
-	if (!target)
+	if ((!target) || (anjuta_project_node_get_type (target) != ANJUTA_PROJECT_TARGET))
 		return;
 	
-	data = gbf_tree_data_new_target (model->priv->proj, target);
+	data = gbf_tree_data_new_target (target);
 	gtk_tree_store_append (GTK_TREE_STORE (model), &iter, parent);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &iter, 
 			    GBF_PROJECT_MODEL_COLUMN_DATA, data,
 			    -1);
-	gbf_tree_data_free (data);
 	
 	/* add sources */
-	for (l = target->sources; l; l = l->next)
-		add_source (model, l->data, &iter);
+	for (l = anjuta_project_node_first_child (target); l; l = anjuta_project_node_next_sibling (l))
+	{
+		add_source (model, l, &iter);
+	}
 
 	/* add a shortcut to the target if the target's type is a primary */
 	/* FIXME: this shouldn't be here.  We would rather provide a
 	 * set of public functions to add/remove shortcuts to save
 	 * this information in the project metadata (when that's
 	 * implemented) */
-	if (!strcmp (target->type, "program") ||
-	    !strcmp (target->type, "shared_lib") ||
-	    !strcmp (target->type, "static_lib") ||
-	    !strcmp (target->type, "java") ||
-	    !strcmp (target->type, "python")) {
-		add_target_shortcut (model, target->id, NULL);
+	switch (anjuta_project_target_type_class (anjuta_project_target_get_type (target)))
+	{
+		case ANJUTA_TARGET_SHAREDLIB:
+		case ANJUTA_TARGET_STATICLIB:
+		case ANJUTA_TARGET_EXECUTABLE:
+		case ANJUTA_TARGET_PYTHON:
+		case ANJUTA_TARGET_JAVA:
+			add_target_shortcut (model, data, NULL);
+			break;
+		default:
+			break;
 	}
-
-	gbf_project_target_free (target);
-}
-
-static void
-update_target (GbfProjectModel *model, const gchar *target_id, GtkTreeIter *iter)
-{
-	GtkTreeModel *tree_model;
-	GbfProjectTarget *target;
-	GtkTreeIter child;
-	GList *node;
-	
-	tree_model = GTK_TREE_MODEL (model);
-	target = gbf_project_get_target (model->priv->proj, target_id, NULL);
-	if (!target)
-		return;
-	
-	/* update target data here */
-	
-	/* walk the tree target */
-	if (gtk_tree_model_iter_children (tree_model, &child, iter)) {
-		GbfTreeData *data;
-		gboolean valid = TRUE;
-		
-		while (valid) {
-			gtk_tree_model_get (tree_model, &child,
-					    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
-					    -1);
-
-			/* find the iterating id in the target's sources */
-			if (data->id) {
-				node = g_list_find_custom (target->sources,
-							   data->id, (GCompareFunc) strcmp);
-				if (node) {
-					target->sources = g_list_delete_link (target->sources, node);
-					valid = gtk_tree_model_iter_next (tree_model, &child);
-				} else {
-					valid = gtk_tree_store_remove (GTK_TREE_STORE (model), &child);
-				}
-				gbf_tree_data_free (data);
-			}
-		}
-	}
-
-	/* add the remaining sources */
-	for (node = target->sources; node; node = node->next)
-		add_source (model, node->data, iter);
-	
-	gbf_project_target_free (target);
 }
 
 static void 
-add_target_group (GbfProjectModel *model,
-		  const gchar     *group_id,
-		  GtkTreeIter     *parent)
+add_target_group (GbfProjectModel 	*model,
+		  AnjutaProjectGroup	*group,
+		  GtkTreeIter     	*parent)
 {
-	GbfProjectGroup *group;
 	GtkTreeIter iter;
-	GList *l;
+	AnjutaProjectNode *node;
 	GbfTreeData *data;
 
-	group = gbf_project_get_group (model->priv->proj, group_id, NULL);
-	if (!group)
+	if ((!group) || (anjuta_project_node_get_type (group) != ANJUTA_PROJECT_GROUP))
 		return;
 	
-	data = gbf_tree_data_new_group (model->priv->proj, group);
+	data = gbf_tree_data_new_group (group);
 	gtk_tree_store_append (GTK_TREE_STORE (model), &iter, parent);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &iter, 
 			    GBF_PROJECT_MODEL_COLUMN_DATA, data,
 			    -1);
-	gbf_tree_data_free (data);
 
 	/* create root reference */
 	if (parent == NULL) {
@@ -557,131 +569,106 @@ add_target_group (GbfProjectModel *model,
 	}
 
 	/* add groups ... */
-	for (l = group->groups; l; l = l->next)
-		add_target_group (model, l->data, &iter);
-
+	for (node = anjuta_project_node_first_child (group); node; node = anjuta_project_node_next_sibling (node))
+		add_target_group (model, node, &iter);
+	
 	/* ... and targets */
-	for (l = group->targets; l; l = l->next)
-		add_target (model, l->data, &iter);
-
-	gbf_project_group_free (group);
+	for (node = anjuta_project_node_first_child (group); node; node = anjuta_project_node_next_sibling (node))
+		add_target (model, node, &iter);
+	
+	/* ... and sources */
+	for (node = anjuta_project_node_first_child (group); node; node = anjuta_project_node_next_sibling (node))
+		add_source (model, node, &iter);
 }
 
 static void
-update_group (GbfProjectModel *model, const gchar *group_id, GtkTreeIter *iter)
+update_tree (GbfProjectModel *model, AnjutaProjectNode *parent, GtkTreeIter *iter)
 {
-	GtkTreeModel *tree_model;
-	GbfProjectGroup *group;
 	GtkTreeIter child;
 	GList *node;
-	
-	tree_model = GTK_TREE_MODEL (model);
-	group = gbf_project_get_group (model->priv->proj, group_id, NULL);
-	
-	/* update group data. nothing to do here */
+	GList *nodes;
 
-	/* walk the tree group */
 	/* group can be NULL, but we iterate anyway to remove any
 	 * shortcuts the old group could have had */
-	if (gtk_tree_model_iter_children (tree_model, &child, iter)) {
-		GbfTreeData *data;
+	
+	/* Get all new nodes */
+	nodes = gbf_project_util_all_child (parent, ANJUTA_PROJECT_UNKNOWN);
+
+	/* walk the tree nodes */
+	if (gtk_tree_model_iter_children (GTK_TREE_MODEL (model), &child, iter)) {
 		gboolean valid = TRUE;
 		
 		while (valid) {
-			gboolean remove_child = FALSE;
-			
-			gtk_tree_model_get (tree_model, &child,
-					    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
-					    -1);
+			AnjutaProjectNode* data;
+			GbfTreeData *tree_data = NULL;
 
-			/* find the iterating id in the group's children */
-			if (data->type == GBF_TREE_NODE_GROUP) {
+			/* Get tree data */
+			gtk_tree_model_get (GTK_TREE_MODEL (model), &child,
+			    GBF_PROJECT_MODEL_COLUMN_DATA, &tree_data,
+			    -1);
+
+			data = gbf_project_model_get_node (model, &child);
+
+			if (data != NULL)
+			{
+				/* Remove from the new node list */
+				node = g_list_find (nodes, data);
+				if (node != NULL)
+				{
+					nodes = g_list_delete_link (nodes, node);
+				}
+
 				/* update recursively */
-				update_group (model, data->id, &child);
-				if (group && (node = g_list_find_custom (group->groups, data->id,
-									 (GCompareFunc) strcmp))) {
-					group->groups = g_list_delete_link (group->groups, node);
-				} else {
-					remove_child = TRUE;
-				}
+				update_tree (model, data, &child);
 				
-			} else if (data->type == GBF_TREE_NODE_TARGET) {
-				GtkTreePath *shortcut;
-
-				if (group && (node = g_list_find_custom (group->targets,
-									 data->id,
-									 (GCompareFunc) strcmp))) {
-					group->targets = g_list_delete_link (group->targets, node);
-					/* update recursively */
-					update_target (model, data->id, &child);
-				} else {
-					remove_child = TRUE;
-				}
-
-				/* remove or update the shortcut if it previously existed */
-				shortcut = find_shortcut (model, data->id);
-				if (shortcut) {
-					GtkTreeIter tmp;
-					
-					if (remove_child)
-						remove_shortcut (model, data->id);
-
-					if (gtk_tree_model_get_iter (tree_model, &tmp, shortcut)) {
-						if (remove_child)
-							gtk_tree_store_remove (GTK_TREE_STORE (model), &tmp);
-						else
-							update_target (model, data->id, &tmp);
-					}
-					gtk_tree_path_free (shortcut);
-				}
+				valid = gtk_tree_model_iter_next (GTK_TREE_MODEL (model), &child);
 			}
-			
-			gbf_tree_data_free (data);
-			if (remove_child)
-				valid = gtk_tree_store_remove (GTK_TREE_STORE (model), &child);
 			else
-				valid = gtk_tree_model_iter_next (tree_model, &child);
-		};
+			{
+				/* update recursively */
+				update_tree (model, data, &child);
+				
+				valid = gbf_project_model_remove (model, &child);
+			}
+		}
 	}
 
-	if (group) {
-		/* add the remaining targets and groups */
-		for (node = group->groups; node; node = node->next)
+	/* add the remaining sources, targets and groups */
+	for (node = nodes; node; node = node->next)
+	{
+		switch (anjuta_project_node_get_type (node->data))
+		{
+		case ANJUTA_PROJECT_GROUP:
 			add_target_group (model, node->data, iter);
-		
-		for (node = group->targets; node; node = node->next)
+			break;
+		case ANJUTA_PROJECT_TARGET:
 			add_target (model, node->data, iter);
-	
-		gbf_project_group_free (group);
+			break;
+		case ANJUTA_PROJECT_SOURCE:
+			add_source (model, node->data, iter);
+			break;
+		default:
+			break;
+		}
 	}
 }
 
 static void
-project_updated_cb (GbfProject *project, GbfProjectModel *model)
+project_updated_cb (IAnjutaProject *project, GbfProjectModel *model)
 {
-	GtkTreePath *path;
-	GtkTreeIter iter;
-
-	path = gtk_tree_row_reference_get_path (model->priv->root_row);
-	if (path && gtk_tree_model_get_iter (GTK_TREE_MODEL (model), &iter, path))
-		update_group (model, "/", &iter);
-	else
-		add_target_group (model, "/", NULL);
-			
-	if (path)
-		gtk_tree_path_free (path);
+	update_tree (model, NULL, NULL);
 }
 
 static void
-load_project (GbfProjectModel *model, GbfProject *proj)
+load_project (GbfProjectModel *model, IAnjutaProject *proj)
 {
 	model->priv->proj = proj;
 	g_object_ref (proj);
 
 	/* to get rid of the empty node */
-	gtk_tree_store_clear (GTK_TREE_STORE (model));
+	gbf_project_model_clear (model);
 
-	add_target_group (model, "/", NULL);
+	add_target_group (model, ianjuta_project_get_root (proj, NULL), NULL);
 
 	model->priv->project_updated_handler =
 		g_signal_connect (model->priv->proj, "project-updated",
@@ -692,10 +679,13 @@ static void
 insert_empty_node (GbfProjectModel *model)
 {
 	GtkTreeIter iter;
+	GbfTreeData *empty_node;
+
+	empty_node = gbf_tree_data_new_string (_("No project loaded"));
 
 	gtk_tree_store_append (GTK_TREE_STORE (model), &iter, NULL);
 	gtk_tree_store_set (GTK_TREE_STORE (model), &iter,
-			    GBF_PROJECT_MODEL_COLUMN_DATA, model->priv->empty_node,
+			    GBF_PROJECT_MODEL_COLUMN_DATA, empty_node,
 			    -1);
 }
 
@@ -706,9 +696,8 @@ unload_project (GbfProjectModel *model)
 		gtk_tree_row_reference_free (model->priv->root_row);
 		model->priv->root_row = NULL;
 
-		gtk_tree_store_clear (GTK_TREE_STORE (model));
+		gbf_project_model_clear (model);
 
-		g_list_foreach (model->priv->shortcuts, (GFunc) g_free, NULL);
 		g_list_free (model->priv->shortcuts);
 		model->priv->shortcuts = NULL;
 		
@@ -723,30 +712,28 @@ unload_project (GbfProjectModel *model)
 }
 
 static gboolean 
-recursive_find_id (GtkTreeModel    *model,
-		   GtkTreeIter     *iter,
-		   GbfTreeNodeType  type,
-		   const gchar     *id)
+recursive_find_id (GtkTreeModel   	*model,
+		   GtkTreeIter     	*iter,
+		   GbfTreeData  	*data)
 {
 	GtkTreeIter tmp;
-	GbfTreeData *data;
 	gboolean retval = FALSE;
 
 	tmp = *iter;
 	
 	do {
 		GtkTreeIter child;
+		GbfTreeData *tmp_data;
 		
 		gtk_tree_model_get (model, &tmp,
-				    GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
-		if (data->type == type && !strcmp (id, data->id)) {
+				    GBF_PROJECT_MODEL_COLUMN_DATA, &tmp_data, -1);
+		if (tmp_data == data) {
 			*iter = tmp;
 			retval = TRUE;
 		}
-		gbf_tree_data_free (data);
 		
 		if (gtk_tree_model_iter_children (model, &child, &tmp)) {
-			if (recursive_find_id (model, &child, type, id)) {
+			if (recursive_find_id (model, &child, data)) {
 				*iter = child;
 				retval = TRUE;
 			}
@@ -758,10 +745,9 @@ recursive_find_id (GtkTreeModel    *model,
 }
 
 gboolean 
-gbf_project_model_find_id (GbfProjectModel *model,
-			   GtkTreeIter     *iter,
-			   GbfTreeNodeType  type,
-			   const gchar     *id)
+gbf_project_model_find_id (GbfProjectModel 	*model,
+			   GtkTreeIter     	*iter,
+			   GbfTreeData  	*data)
 {
 	GtkTreePath *root;
 	GtkTreeIter tmp_iter;
@@ -772,7 +758,7 @@ gbf_project_model_find_id (GbfProjectModel *model,
 		return FALSE;
 
 	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (model), &tmp_iter, root)) {
-		if (recursive_find_id (GTK_TREE_MODEL (model), &tmp_iter, type, id)) {
+		if (recursive_find_id (GTK_TREE_MODEL (model), &tmp_iter, data)) {
 			retval = TRUE;
 			*iter = tmp_iter;
 		}
@@ -782,8 +768,150 @@ gbf_project_model_find_id (GbfProjectModel *model,
 	return retval;
 }
 
+static GbfTreeData *
+recursive_find_group (GtkTreeModel   	*model,
+		   GtkTreeIter     	*parent,
+    		   GtkTreeIter		*found,
+		   GFile		*file)
+{
+	GtkTreeIter iter;
+	gboolean next;
+	GbfTreeData *data = NULL;
+
+	for (next = gtk_tree_model_iter_children (model, &iter, parent);
+	    next;
+	    next = gtk_tree_model_iter_next (model, &iter))
+	{
+		gtk_tree_model_get (model, &iter,
+		    GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
+
+		if (data->type == GBF_TREE_NODE_SHORTCUT)
+		{
+			data = data->shortcut;
+		}
+		if ((data->type == GBF_TREE_NODE_GROUP) && (data->group != NULL) && g_file_equal (data->group, file))
+		{
+			if (found != NULL) *found = iter;
+			return data;
+		}
+
+		data = recursive_find_group (model, &iter, found, file);
+		if (data != NULL) return data;
+	}
+
+	return NULL;
+}
+
+static GbfTreeData *
+recursive_find_target (GtkTreeModel   	*model,
+		   GtkTreeIter     	*parent,
+    		   GtkTreeIter		*found,
+		   const gchar	        *name)
+{
+	GtkTreeIter iter;
+	gboolean next;
+	GbfTreeData *data = NULL;
+
+	for (next = gtk_tree_model_iter_children (model, &iter, parent);
+	    next;
+	    next = gtk_tree_model_iter_next (model, &iter))
+	{
+		gtk_tree_model_get (model, &iter,
+		    GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
+
+		if (data->type == GBF_TREE_NODE_SHORTCUT)
+		{
+			data = data->shortcut;
+		}
+		if ((data->type == GBF_TREE_NODE_TARGET) && (data->name != NULL) && (strcmp (data->name, name) == 0))
+		{
+			if (found != NULL) *found = iter;
+			return data;
+		}
+		else
+		{
+			return NULL;
+		}
+	}
+
+	return NULL;
+}
+
+static GbfTreeData *
+recursive_find_source (GtkTreeModel   	*model,
+		   GtkTreeIter     	*parent,
+		   GtkTreeIter     	*found,
+		   GFile		*file)
+{
+	GtkTreeIter iter;
+	gboolean next;
+	GbfTreeData *data = NULL;
+
+	for (next = gtk_tree_model_iter_children (model, &iter, parent);
+	    next;
+	    next = gtk_tree_model_iter_next (model, &iter))
+	{
+		gtk_tree_model_get (model, &iter,
+		    GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
+
+		if (data->type == GBF_TREE_NODE_SHORTCUT)
+		{
+			data = data->shortcut;
+		}
+		if ((data->type == GBF_TREE_NODE_SOURCE) && (data->source != NULL) && g_file_equal (data->source, file))
+		{
+			if (found != NULL) *found = iter;
+			return data;
+		}
+		
+		data = recursive_find_group (model, &iter, found, file);
+		if (data != NULL) return data;
+	}
+
+	return NULL;
+}
+
+GbfTreeData*
+gbf_project_model_find_uri (GbfProjectModel     *model,
+    			    const gchar         *uri,
+    			    GbfTreeNodeType     type)
+{
+	GFile *file;
+	GFile *group;
+	gchar *name;
+	GbfTreeData *data = NULL;
+	GtkTreeIter iter;
+
+	file = g_file_new_for_uri (uri);
+	switch (type)
+	{
+	case GBF_TREE_NODE_SOURCE:
+		data = recursive_find_source (GTK_TREE_MODEL (model), NULL, NULL, file);
+		break;
+	case GBF_TREE_NODE_GROUP:
+		data = recursive_find_group (GTK_TREE_MODEL (model), NULL, NULL, file);
+		break;
+	case GBF_TREE_NODE_TARGET:
+		group = g_file_get_parent (file);
+		name = g_file_get_basename (file);
+		if (recursive_find_group (GTK_TREE_MODEL (model), NULL, &iter, group))
+		{
+			data = recursive_find_target (GTK_TREE_MODEL (model), &iter, NULL, name);
+		}
+		g_free (name);
+		g_object_unref (group);
+		break;
+	default:
+		break;
+	}
+		
+	g_object_unref (file);
+
+	return data;
+}
+
 GbfProjectModel *
-gbf_project_model_new (GbfProject *project)
+gbf_project_model_new (IAnjutaProject *project)
 {
 	return GBF_PROJECT_MODEL (g_object_new (GBF_TYPE_PROJECT_MODEL,
 						"project", project,
@@ -791,10 +919,10 @@ gbf_project_model_new (GbfProject *project)
 }
 
 void 
-gbf_project_model_set_project (GbfProjectModel *model, GbfProject *project)
+gbf_project_model_set_project (GbfProjectModel *model, IAnjutaProject *project)
 {
 	g_return_if_fail (model != NULL && GBF_IS_PROJECT_MODEL (model));
-	g_return_if_fail (project == NULL || GBF_IS_PROJECT (project));
+	g_return_if_fail (project == NULL || IANJUTA_IS_PROJECT (project));
 	
 	if (model->priv->proj)
 		unload_project (model);
@@ -803,7 +931,7 @@ gbf_project_model_set_project (GbfProjectModel *model, GbfProject *project)
 		load_project (model, project);
 }
 
-GbfProject *
+IAnjutaProject *
 gbf_project_model_get_project (GbfProjectModel *model)
 {
 	g_return_val_if_fail (model != NULL && GBF_IS_PROJECT_MODEL (model), NULL);
@@ -824,6 +952,18 @@ gbf_project_model_get_project_root (GbfProjectModel *model)
 	return path;
 }
 
+AnjutaProjectNode *
+gbf_project_model_get_node (GbfProjectModel *model,
+                            GtkTreeIter     *iter)
+{
+	GbfTreeData *data = NULL;
+	
+	gtk_tree_model_get (GTK_TREE_MODEL (model), iter,
+			    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
+			    -1);
+
+	return gbf_tree_data_get_node (data, model->priv->proj);
+}
 
 /* DND stuff ------------- */
 
@@ -846,16 +986,10 @@ row_draggable (GtkTreeDragSource *drag_source, GtkTreePath *path)
 		retval = TRUE;
 
 	} else if (data->type == GBF_TREE_NODE_TARGET) {
-		GtkTreePath *found;
-		
 		/* don't allow duplicate shortcuts */
-		found = find_shortcut (GBF_PROJECT_MODEL (drag_source), data->id);
-		if (!found)
+		if (data->shortcut == NULL)
 			retval = TRUE;
-		else
-			gtk_tree_path_free (found);
 	}
-	gbf_tree_data_free (data);
 
 	return retval;
 }
@@ -863,25 +997,7 @@ row_draggable (GtkTreeDragSource *drag_source, GtkTreePath *path)
 static gboolean 
 drag_data_delete (GtkTreeDragSource *drag_source, GtkTreePath *path)
 {
-	GtkTreeIter iter;
-	gboolean retval = FALSE;
-	
-	if (gtk_tree_model_get_iter (GTK_TREE_MODEL (drag_source),
-				     &iter, path)) {
-		GbfTreeData *data;
-
-		gtk_tree_model_get (GTK_TREE_MODEL (drag_source), &iter,
-				    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
-				    -1);
-
-		if (data->is_shortcut) {
-			gtk_tree_store_remove (GTK_TREE_STORE (drag_source), &iter);
-			retval = TRUE;
-		}
-		gbf_tree_data_free (data);
-	}
-	
-	return retval;
+	return FALSE;
 }
 
 static gboolean
@@ -907,12 +1023,20 @@ drag_data_received (GtkTreeDragDest  *drag_dest,
 			gtk_tree_model_get (src_model, &iter,
 					    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
 					    -1);
-			if (data && data->id && data->type == GBF_TREE_NODE_TARGET) {
-				add_target_shortcut (GBF_PROJECT_MODEL (drag_dest),
-						     data->id, dest);
+			if (data != NULL)
+			{
+				if (data->type == GBF_TREE_NODE_SHORTCUT)
+				{
+					move_target_shortcut (GBF_PROJECT_MODEL (drag_dest),
+					    		&iter, data, dest);
+				}
+				else
+				{
+					add_target_shortcut (GBF_PROJECT_MODEL (drag_dest),
+						     	data, dest);
+				}
 				retval = TRUE;
 			}
-			gbf_tree_data_free (data);
 		}
 	}
 

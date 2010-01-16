@@ -18,6 +18,19 @@ public interface IAnjuta.ProjectBackend : Object
 	 *
 	 * Return value: An object derived from GbfProject
 	 */
-	/*FIXME */
-	public abstract Gbf.Project new_project () throws Error;
+	public abstract Project new_project () throws Error;
+
+	/**
+	 * ianjuta_project_backend_probe:
+	 * @self: Self
+	 * @directory: Project directory
+	 * @error: Error propagation and reporting
+	 *
+	 * Check if the directory contains a project supported by this
+	 * backend
+	 *
+	 * Return value: 0 if the project is invalid and > 0 if the
+	 * project is valid. 
+	 */
+	public abstract int probe (GLib.File directory) throws Error;
 }

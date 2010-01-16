@@ -85,6 +85,7 @@ libanjuta_interfaces_la_SOURCES = \
 	ianjuta-plugin-factory.vala \
 	ianjuta-preferences.vala \
 	ianjuta-print.vala \
+	ianjuta-project.vala \
 	ianjuta-project-backend.vala \
 	ianjuta-project-manager.vala \
 	ianjuta-provider.vala \

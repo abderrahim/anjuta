@@ -692,8 +692,8 @@ value_added_current_editor (AnjutaPlugin *plugin, const char *name,
 	{
 		sdb_plugin->buffer_update_semaphore = TRUE;
 	}
-	else
-	{
+	else 
+	{		
 		symbol_db_view_locals_update_list (
 					SYMBOL_DB_VIEW_LOCALS (sdb_plugin->dbv_view_tree_locals),
 					 sdb_plugin->sdbe_project, local_path, FALSE);
@@ -1240,7 +1240,8 @@ clear_project_progress_bar (SymbolDBEngine *dbe, gpointer data)
 						 sdb_plugin->sdbe_project);
 	
 	/* ok, enable local symbols view */
-	if (!IANJUTA_IS_EDITOR (sdb_plugin->current_editor))
+	if (sdb_plugin->current_editor == NULL  ||
+	    IANJUTA_IS_FILE (sdb_plugin->current_editor) == FALSE)
 	{
 		return;
 	}
@@ -1411,7 +1412,7 @@ do_import_project_sources (AnjutaPlugin *plugin, IAnjutaProjectManager *pm,
 	sdb_plugin = ANJUTA_PLUGIN_SYMBOL_DB (plugin);	
 
 	prj_elements_list = ianjuta_project_manager_get_elements (pm,
-					   IANJUTA_PROJECT_MANAGER_SOURCE,
+					   ANJUTA_PROJECT_SOURCE,
 					   NULL);
 	
 	if (prj_elements_list == NULL)
@@ -1571,13 +1572,13 @@ do_check_offline_files_changed (SymbolDBPlugin *sdb_plugin)
 	GHashTable *prj_elements_hash;
 	GPtrArray *to_add_files = NULL;
 	gint i;
-	gint real_added ;
+	gint real_added = 0;
 	
 	pm = anjuta_shell_get_interface (ANJUTA_PLUGIN (sdb_plugin)->shell,
 									 IAnjutaProjectManager, NULL);	
 
 	prj_elements_list = ianjuta_project_manager_get_elements (pm,
-		   IANJUTA_PROJECT_MANAGER_SOURCE,
+		   ANJUTA_PROJECT_SOURCE,
 		   NULL);
 	
 	/* fill an hash table with all the items of the list just taken. 
@@ -2377,15 +2378,15 @@ symbol_db_activate (AnjutaPlugin *plugin)
 
 	gtk_widget_show_all (sdb_plugin->dbv_hbox);
 	
-	sdb_plugin->progress_bar_project = gtk_progress_bar_new();
+	sdb_plugin->progress_bar_project = gtk_progress_bar_new();	
 	gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR(sdb_plugin->progress_bar_project),
-									PANGO_ELLIPSIZE_MIDDLE);
+									PANGO_ELLIPSIZE_MIDDLE);	
 	g_object_ref (sdb_plugin->progress_bar_project);
 	
 	sdb_plugin->progress_bar_system = gtk_progress_bar_new();
 	gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR(sdb_plugin->progress_bar_system),
 									PANGO_ELLIPSIZE_MIDDLE);
-	g_object_ref (sdb_plugin->progress_bar_system);
+	g_object_ref (sdb_plugin->progress_bar_system);	
 	
 	gtk_box_pack_start (GTK_BOX (sdb_plugin->dbv_main), sdb_plugin->dbv_notebook,
 						TRUE, TRUE, 0);
@@ -2394,7 +2395,6 @@ symbol_db_activate (AnjutaPlugin *plugin)
 	gtk_box_pack_start (GTK_BOX (sdb_plugin->dbv_main), sdb_plugin->progress_bar_system,
 						FALSE, FALSE, 0);	
 	gtk_widget_show_all (sdb_plugin->dbv_main);
-	
 
 	/* Local symbols */
 	sdb_plugin->scrolled_locals = gtk_scrolled_window_new (NULL, NULL);
@@ -2477,7 +2477,7 @@ symbol_db_activate (AnjutaPlugin *plugin)
 							  sdb_plugin->dbv_view_search_tab_label);
 
 	gtk_widget_show_all (sdb_plugin->dbv_notebook);
-	
+
 	/* setting focus to the tree_view*/
 	gtk_notebook_set_current_page (GTK_NOTEBOOK (sdb_plugin->dbv_notebook), 0);
 
@@ -2525,7 +2525,11 @@ symbol_db_activate (AnjutaPlugin *plugin)
 	
 	g_signal_connect (plugin->shell, "save-session", 
 					  G_CALLBACK (on_session_save), plugin);
-		
+
+	/* be sure to hide the progress bars in case no project has been opened. */
+	gtk_widget_hide (sdb_plugin->progress_bar_project);
+	gtk_widget_hide (sdb_plugin->progress_bar_system);	
+	
 	return TRUE;
 }
 

@@ -22,7 +22,8 @@
 #define _PROJECT_MANAGER_PLUGIN_H_
 
 #include <libanjuta/anjuta-plugin.h>
-#include <libanjuta/gbf-project.h>
+#include <libanjuta/anjuta-project.h>
+#include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include "gbf-project-model.h"
 #include "gbf-project-view.h"
 
@@ -42,7 +43,7 @@ struct _ProjectManagerPlugin{
 	
 	AnjutaUI *ui;
 	AnjutaPreferences *prefs;
-	GbfProject *project;
+	IAnjutaProject *project;
 	GtkWidget *view;
 	GbfProjectModel *model;
 	GtkWidget *scrolledwindow;
@@ -70,8 +71,8 @@ struct _ProjectManagerPlugin{
 	/* Idle callback id */
 	guint close_project_idle;
 	
-	/* List of non modal properties dialog */
-	GList* prop_dialogs;
+	/* project properties dialog */
+	GtkWidget *properties_dialog;
 };
 
 struct _ProjectManagerPluginClass{

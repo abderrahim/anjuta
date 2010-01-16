@@ -73,6 +73,7 @@ row_activated (GtkTreeView       *tree_view,
 	GtkTreeModel *model;
 	GtkTreeIter iter;
 	GbfTreeData *data;
+	gchar *uri;
 	
 	model = gtk_tree_view_get_model (tree_view);
 
@@ -82,25 +83,25 @@ row_activated (GtkTreeView       *tree_view,
 			    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
 			    -1);
 
-	if (data->uri) {
+	uri = gbf_tree_data_get_uri (data);
+	if (uri != NULL) {
 		g_signal_emit (G_OBJECT (tree_view), 
 			       signals [URI_ACTIVATED], 0,
-			       data->uri);
+			       uri);
 	}
 
 	if (data->type == GBF_TREE_NODE_TARGET) {
 		g_signal_emit (G_OBJECT (tree_view),
 			       signals [TARGET_SELECTED], 0,
-			       data->id);
+			       uri);
 	}
 	
 	if (data->type == GBF_TREE_NODE_GROUP) {
 		g_signal_emit (G_OBJECT (tree_view),
 			       signals [GROUP_SELECTED], 0,
-			       data->id);
+			       uri);
 	}
-	
-	gbf_tree_data_free (data);
+	g_free (uri);
 }
 
 static void
@@ -122,17 +123,15 @@ destroy (GtkObject *object)
 }
 
 static GdkPixbuf*
-get_icon (const gchar* uri)
+get_icon (GFile *file)
 {
 	const gchar** icon_names;
 	GtkIconInfo* icon_info;
 	GIcon* icon;
 	GdkPixbuf* pixbuf = NULL;
-	GFile* file;
 	GFileInfo* file_info;
 	GError *error = NULL;
 	
-	file = g_file_new_for_uri (uri);
 	file_info = g_file_query_info (file,
 				       G_FILE_ATTRIBUTE_STANDARD_ICON,
 				       G_FILE_QUERY_INFO_NONE,
@@ -141,7 +140,10 @@ get_icon (const gchar* uri)
 
 	if (!file_info)
 	{
-		g_warning (G_STRLOC ": Unable to query information for URI: %s: %s", uri, error->message);
+		gchar *name = g_file_get_parse_name (file);
+		
+		g_warning (G_STRLOC ": Unable to query information for URI: %s: %s", name, error->message);
+		g_free (name);
 		g_clear_error (&error);
 		return NULL;
 	}
@@ -154,6 +156,7 @@ get_icon (const gchar* uri)
 						GTK_ICON_LOOKUP_GENERIC_FALLBACK);
 	pixbuf = gtk_icon_info_load_icon (icon_info, NULL);
 	gtk_icon_info_free(icon_info);
+	g_object_unref (file_info);
 	
 	return pixbuf;
 }
@@ -165,18 +168,21 @@ set_pixbuf (GtkTreeViewColumn *tree_column,
 	    GtkTreeIter       *iter,
 	    gpointer           user_data)
 {
-	//GbfProjectView *view = GBF_PROJECT_VIEW (user_data);
 	GbfTreeData *data = NULL;
 	GdkPixbuf *pixbuf = NULL;
 	
 	gtk_tree_model_get (model, iter,
 			    GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
 	g_return_if_fail (data != NULL);
-	
+
+	if (data->type == GBF_TREE_NODE_SHORTCUT)
+	{
+		data = data->shortcut;
+	}
 	switch (data->type) {
-		case GBF_TREE_NODE_TARGET_SOURCE:
+		case GBF_TREE_NODE_SOURCE:
 		{
-			pixbuf = get_icon (data->uri);
+			pixbuf = get_icon (data->source);
 			break;
 		}
 		case GBF_TREE_NODE_GROUP:
@@ -202,8 +208,6 @@ set_pixbuf (GtkTreeViewColumn *tree_column,
 	g_object_set (GTK_CELL_RENDERER (cell), "pixbuf", pixbuf, NULL);
 	if (pixbuf)
 		g_object_unref (pixbuf);
-
-	gbf_tree_data_free (data);
 }
 
 static void
@@ -215,10 +219,9 @@ set_text (GtkTreeViewColumn *tree_column,
 {
 	GbfTreeData *data;
   
-	gtk_tree_model_get (model, iter, 0, &data, -1);
+	gtk_tree_model_get (model, iter, GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
 	g_object_set (GTK_CELL_RENDERER (cell), "text", 
 		      data->name, NULL);
-	gbf_tree_data_free (data);
 }
 
 static gboolean
@@ -229,10 +232,9 @@ search_equal_func (GtkTreeModel *model, gint column,
 	GbfTreeData *data;
 	gboolean ret = TRUE;
 		     
-	gtk_tree_model_get (model, iter, 0, &data, -1);
+	gtk_tree_model_get (model, iter, GBF_PROJECT_MODEL_COLUMN_DATA, &data, -1);
 	if (strncmp (data->name, key, strlen (key)) == 0)
 	    ret = FALSE;
-	gbf_tree_data_free (data);
 	return ret;
 }
 
@@ -309,8 +311,8 @@ gbf_project_view_class_init (GbfProjectViewClass *klass)
 			      G_STRUCT_OFFSET (GbfProjectViewClass,
 					       target_selected),
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__STRING,
-			      G_TYPE_NONE, 1, G_TYPE_STRING);
+			      g_cclosure_marshal_VOID__POINTER,
+			      G_TYPE_NONE, 1, G_TYPE_POINTER);
 	signals [GROUP_SELECTED] = 
 		g_signal_new ("group_selected",
 			      GBF_TYPE_PROJECT_VIEW,
@@ -318,8 +320,8 @@ gbf_project_view_class_init (GbfProjectViewClass *klass)
 			      G_STRUCT_OFFSET (GbfProjectViewClass,
 					       group_selected),
 			      NULL, NULL,
-			      g_cclosure_marshal_VOID__STRING,
-			      G_TYPE_NONE, 1, G_TYPE_STRING);
+			      g_cclosure_marshal_VOID__POINTER,
+			      G_TYPE_NONE, 1, G_TYPE_POINTER);
 }
 
 static void 
@@ -367,35 +369,68 @@ gbf_project_view_new (void)
 	return GTK_WIDGET (g_object_new (GBF_TYPE_PROJECT_VIEW, NULL));
 }
 
-GbfTreeData *
-gbf_project_view_find_selected (GbfProjectView *view, GbfTreeNodeType type)
+AnjutaProjectNode *
+gbf_project_view_find_selected (GbfProjectView *view, AnjutaProjectNodeType type)
 {
-	GbfTreeData *data = NULL;
 	GtkTreeSelection *selection;
 	GtkTreeModel *model;
-	GtkTreeIter iter, iter2;
+	GtkTreeIter iter;
+	AnjutaProjectNode *node = NULL;
 
 	g_return_val_if_fail (view != NULL, NULL);
 	g_return_val_if_fail (GBF_IS_PROJECT_VIEW (view), NULL);
 	
 	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
 	if (gtk_tree_selection_get_selected (selection, &model, &iter)) {
-		gtk_tree_model_get (model, &iter,
-				    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
-				    -1);
-		/* walk up the hierarchy searching for a node of the given type */
-		while (NULL != data && data->type != type) {
-			gbf_tree_data_free (data);
-			data = NULL;
-
-			if (!gtk_tree_model_iter_parent (model, &iter2, &iter))
-				break;
-			
-			gtk_tree_model_get (model, &iter2,
-					    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
-					    -1);
-			iter = iter2;
+		if (GBF_IS_PROJECT_MODEL (model))
+		{
+			node = gbf_project_model_get_node (GBF_PROJECT_MODEL (model), &iter);
 		}
+		else if (GTK_IS_TREE_MODEL_FILTER (model))
+		{
+			GtkTreeIter child_iter;
+			
+			gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (model), &child_iter, &iter);
+			model = gtk_tree_model_filter_get_model (GTK_TREE_MODEL_FILTER (model));
+			node = gbf_project_model_get_node (GBF_PROJECT_MODEL (model), &child_iter);
+		}
+
+		/* walk up the hierarchy searching for a node of the given type */
+		while ((node != NULL) && (anjuta_project_node_get_type (node) != type))
+		{
+			node = anjuta_project_node_parent (node);
+		}
+	}
+
+	return node;
+}
+
+GbfTreeData *
+gbf_project_view_get_selected (GbfProjectView *view)
+{
+	GtkTreeSelection *selection;
+	GtkTreeModel *model;
+	GtkTreeIter iter;
+	GbfTreeData *data;
+
+	g_return_val_if_fail (view != NULL, FALSE);
+	g_return_val_if_fail (GBF_IS_PROJECT_VIEW (view), FALSE);
+	
+	selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (view));
+	if (gtk_tree_selection_get_selected (selection, &model, &iter))
+	{
+		if (GTK_IS_TREE_MODEL_FILTER (model))
+		{
+			GtkTreeIter child_iter;
+			
+			gtk_tree_model_filter_convert_iter_to_child_iter (GTK_TREE_MODEL_FILTER (model), &child_iter, &iter);
+			iter = child_iter;			
+		}
+		
+	
+		gtk_tree_model_get (GTK_TREE_MODEL (model), &iter,
+			    GBF_PROJECT_MODEL_COLUMN_DATA, &data,
+			    -1);
 	}
 
 	return data;

@@ -375,7 +375,8 @@ public interface IAnjuta.SymbolManager : Object
 	 * ianjuta_symbol_manager_get_parent_scope:
 	 * @self: Self
 	 * @symbol: Symbol which you want to know the parent scope of.
-	 * @filename: Can be NULL. Full path filename where to search for the parent scope symbol.
+	 * @filename: Can be NULL for a wider search (i.e. not just limited to that file).
+	 *            Full path filename where to search for the parent scope symbol.
 	 * @info_fields: Kind of infos you would like to have available on the resulting Symbols.
 	 * @error: Error propagation and reporting.
 	 *
@@ -392,6 +393,8 @@ public interface IAnjuta.SymbolManager : Object
 	 * ianjuta_symbol_manager_get_scope_chain:
 	 * @self: Self
 	 * @filename: Full path filename where to search for the parent scope symbol.
+	 *            Can be NULL for a wider search (i.e. not just limited to that file).
+	 * @line: Line of the file where the symbol is.
 	 * @info_fields: Kind of infos you would like to have available on the resulting Symbols.
 	 * @error: Error propagation and reporting.
 	 *
@@ -411,7 +414,7 @@ public interface IAnjuta.SymbolManager : Object
 	 * Returns: NULL on error or if scope isn't found. The returned iterator'll contain
 	 * symbols in this order: foo_func, FooKlass, FooBase.
 	 */
-	public abstract Iterable get_scope_chain (string filename, ulong line, SymbolField info_fields) throws Error;
+	public abstract Iterable get_scope_chain (string? filename, ulong line, SymbolField info_fields) throws Error;
 
 	/**
 	 * ianjuta_symbol_manager_search_symbol_in_scope:
@@ -454,7 +457,7 @@ public interface IAnjuta.SymbolManager : Object
 	/**
 	 * ianjuta_symbol_manager_get_symbol_by_id:
 	 * @self: Self
-	 * @symbol_id unique id of the symbol you want to know about.
+	 * @symbol_id: unique id of the symbol you want to know about.
 	 * @info_fields: Kind of infos you would like to have available on the resulting Symbols.
 	 * @return NULL on error.
 	 *

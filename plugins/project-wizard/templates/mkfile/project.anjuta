@@ -6,9 +6,16 @@
 		<require group="Anjuta Plugin"
 		 attribute="Interfaces"
 		 value="IAnjutaProjectManager"/>
+	</plugin>
+	<plugin name="Makefile Project Backend"
+            url="http://anjuta.org/plugins/"
+            mandatory="yes">
+		<require group="Anjuta Plugin"
+                 attribute="Interfaces"
+                 value="IAnjutaProjectBackend"/>
 		<require group="Project"
-		 attribute="Supported-Project-Types"
-		 value="make"/>
+                 attribute="Supported-Project-Types"
+                 value="make"/>
 	</plugin>
 	<plugin name="Symbol Browser"
             url="http://anjuta.org/plugins/"

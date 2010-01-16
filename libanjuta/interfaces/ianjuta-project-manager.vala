@@ -7,34 +7,6 @@
  * @include: libanjuta/interfaces/libanjuta-interfaces.h
  *
  */
-[CCode (cprefix="IANJUTA_PROJECT_MANAGER_")]
-public enum IAnjuta.ProjectManagerElementType
-{
-	UNKNOWN,
-	SOURCE,
-	TARGET,
-	GROUP
-}
-
-[CCode (cprefix="IANJUTA_PROJECT_MANAGER_TARGET_")]
-public enum IAnjuta.ProjectManagerTargetType
-{
-	UNKNOWN,
-	SHAREDLIB,
-	STATICLIB,
-	EXECUTABLE
-}
-
-[Flags]
-[CCode (cprefix="IANJUTA_PROJECT_MANAGER_")]
-public enum IAnjuta.ProjectManagerCapabilities
-{
-	CAN_ADD_NONE     = 0,
-	CAN_ADD_GROUP    = 1 << 0,
-	CAN_ADD_TARGET   = 1 << 1,
-	CAN_ADD_SOURCE   = 1 << 2
-}
-
 
 public interface IAnjuta.ProjectManager : Object
 {
@@ -58,7 +30,10 @@ public interface IAnjuta.ProjectManager : Object
 	 * @element_uri: fixme
 	 * @error: Error propagation and reporting.
 	 *
-	 * fixme
+	 * Emitted when a new element is added to the project. It can be
+	 * a source, a target or a group. The URI does not always correspond
+	 * to an existing file. This signal can be emitted several time for
+	 * the same element.
 	 */
 	public signal void element_added (string element_uri);
 
@@ -94,7 +69,7 @@ public interface IAnjuta.ProjectManager : Object
 	*
 	* Returns: fixme
 	*/
-	public abstract ProjectManagerElementType get_element_type (string element_uri) throws Error;
+	public abstract Anjuta.ProjectNodeType get_element_type (string element_uri) throws Error;
 
 	/**
 	 * ianjuta_project_manager_get_elements:
@@ -106,7 +81,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * Returns: fixme
 	 */
-	public abstract List<string> get_elements (ProjectManagerElementType element_type) throws Error;
+	public abstract List<string> get_elements (Anjuta.ProjectNodeType element_type) throws Error;
 
 	/**
 	 * ianjuta_project_manager_get_target_type:
@@ -118,7 +93,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * Returns: fixme
 	 */
-	public abstract ProjectManagerTargetType get_target_type (string target_uri) throws Error;
+	public abstract Anjuta.ProjectTargetClass get_target_type (string target_uri) throws Error;
 
 	/**
 	 * ianjuta_project_manager_get_targets:
@@ -130,7 +105,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * Returns: fixme
 	 */
-	public abstract List<string> get_targets (ProjectManagerTargetType target_type) throws Error;
+	public abstract List<string> get_targets (Anjuta.ProjectTargetClass target_type) throws Error;
 
 	/**
 	 * ianjuta_project_manager_get_parent:
@@ -173,7 +148,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * fixme
 	 */
-	public abstract string get_selected_id (ProjectManagerElementType element_type) throws Error;
+	public abstract string get_selected_id (Anjuta.ProjectNodeType element_type) throws Error;
 
 	/**
 	 * ianjuta_project_manager_get_capabilities:
@@ -185,7 +160,7 @@ public interface IAnjuta.ProjectManager : Object
 	 *
 	 * Returns: Supported capabilites.
 	 */
-	public abstract ProjectManagerCapabilities get_capabilities () throws Error;
+	public abstract uint get_capabilities () throws Error;
 
 	/**
 	 * ianjuta_project_manager_add_source:
@@ -205,26 +180,34 @@ public interface IAnjuta.ProjectManager : Object
 	 * ianjuta_project_manager_add_source_quiet:
 	 * @self: Self
 	 * @source_uri_to_add: fixme
-	 * @target_id: fixme
+	 * @target_uri: fixme
 	 * @error: Error propagation and reporting.
 	 *
 	 * Add a file to the project without prompting the user.
 	 *
 	 * Returns: element ID. Must be freed when no longer required.
 	 */
-	public abstract string add_source_quiet (string source_uri_to_add, string target_id) throws Error;
+	public abstract string add_source_quiet (string source_uri_to_add, string target_uri) throws Error;
 
 	/**
 	 * ianjuta_project_manager_add_sources:
 	 * @self: Self
-	 * @source_uris_to_add: fixme
+	 * @source_uris_to_add: sources URI to add
 	 * @default_location_uri: fixme
 	 * @error: Error propagation and reporting.
 	 *
-	 * Prompt the user to add a file to the project. If the user selects
-	 * multiple files only the first uri is returned.
+	 * Prompt the user to add a file to the project. Depending on the
+	 * project backend, it can be possible that the source files must
+	 * be located in a particular directory. You can pass to this
+	 * function relative URI and it will return absolute URI valid
+	 * for the target selected by the user.
 	 *
-	 * Returns: element URIs. Must be freed when no longer required.
+	 * You can add non existing file. In this case the element_added
+	 * signal will be emitted with a non existing file. So it is
+	 * up to the caller to reemit this signal later when the file
+	 * is created.
+	 *
+	 * Returns: absolute element URIs. Must be freed when no longer required.
 	 */
 	public abstract List<string> add_sources (List<string> source_uris_to_add, string default_location_uri) throws Error;
 

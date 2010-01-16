@@ -334,7 +334,7 @@ cpp_java_assist_update_autocomplete (CppJavaAssist *assist)
 
 	// DEBUG_PRINT ("Queries active: %d", queries_active);
 	
-	if (assist->priv->completion_cache == NULL || !assist->priv->pre_word)
+	if (assist->priv->completion_cache == NULL)
 	{
 		ianjuta_editor_assist_proposals (assist->priv->iassist, IANJUTA_PROVIDER(assist),
 		                                 NULL, !queries_active, NULL);
@@ -704,14 +704,18 @@ on_editor_char_added (IAnjutaEditor *editor, IAnjutaIterable *insert_pos,
 	cpp_java_assist_calltip(assist, enable_calltips, (ch == '\b'));
 }
 
+/* FIXME: find a better tester */
 static gboolean
-is_word_or_operator(gchar c)
+is_expression_separator (gchar c)
 {
-	if (is_word_character (c) || c == '.' || c == '-' || c == '>')
+	if (c == ';' || c == '\n' || c == '\r' || c == '\t' || /*c == '(' || c == ')' || */
+	    c == '{' || c == '}' || c == '=' || c == '<' /*|| c == '>'*/ || c == '\v' || c == '!')
+	{
 		return TRUE;
+	}
+
 	return FALSE;
 }
-
 
 static IAnjutaIterable*
 cpp_java_parse_expression (CppJavaAssist* assist, IAnjutaIterable* iter, IAnjutaIterable** start_iter)
@@ -730,8 +734,10 @@ cpp_java_parse_expression (CppJavaAssist* assist, IAnjutaIterable* iter, IAnjuta
 
 		DEBUG_PRINT ("ch == '%c'", ch);
 		
-		if (!is_word_or_operator (ch))
+		if (is_expression_separator(ch)) {
+			DEBUG_PRINT ("found char '%c' which is an expression_separator", ch);
 			break;
+		}
 
 		if (ch == '.' || (op_start && ch == '-') || (ref_start && ch == ':'))
 		{
@@ -740,6 +746,15 @@ cpp_java_parse_expression (CppJavaAssist* assist, IAnjutaIterable* iter, IAnjuta
 			IAnjutaIterable* pre_word_end = ianjuta_iterable_clone (iter, NULL);
 			IAnjutaIterable* stmt_end = ianjuta_iterable_clone (pre_word_start, NULL);
 
+			/* we need to pass to the parser all the statement included the last operator,
+			 * being it "." or "->" or "::"
+			 * Increase the end bound of the statement.
+			 */
+			ianjuta_iterable_next (stmt_end, NULL);
+			if (op_start == TRUE || ref_start == TRUE)
+				ianjuta_iterable_next (stmt_end, NULL);
+				
+			
 			/* Move one character forward so we have the start of the pre_word and
 			 * not the last operator */
 			ianjuta_iterable_next (pre_word_start, NULL);
@@ -759,8 +774,9 @@ cpp_java_parse_expression (CppJavaAssist* assist, IAnjutaIterable* iter, IAnjuta
 			while (ianjuta_iterable_previous (cur_pos, NULL))
 			{
 				gchar word_ch = ianjuta_editor_cell_get_char (IANJUTA_EDITOR_CELL(cur_pos), 0, NULL);
-				if (!is_word_character (word_ch))
-					break;
+				
+				if (is_expression_separator(word_ch)) 
+					break;				
 			}
 			ianjuta_iterable_next (cur_pos, NULL);
 			stmt = ianjuta_editor_get_text (editor,
@@ -804,22 +820,28 @@ cpp_java_parse_expression (CppJavaAssist* assist, IAnjutaIterable* iter, IAnjuta
 		g_object_unref (start);
 		
 		lineno = ianjuta_editor_get_lineno (editor, NULL);
-		if (!ref_start)
-		{
-			res = engine_parser_process_expression (stmt,
-			                                        above_text,
-			                                        filename,
-			                                        lineno);
-		}
-		else
-		{
-			/* TODO: Add search for things like Gtk:: */
-		}
+
+		/* the parser works even for the "Gtk::" like expressions, so it shouldn't be 
+		 * created a specific case to handle this.
+		 */
+		DEBUG_PRINT ("calling engine_parser_process_expression stmt: %s ", stmt);
+		res = engine_parser_process_expression (stmt,
+		                                        above_text,
+		                                        filename,
+		                                        lineno);
 		g_free (filename);
 		g_free (stmt);
 	}
 	g_object_unref (cur_pos);
 	return res;
+}
+
+static gboolean
+cpp_java_assist_valid_iter (CppJavaAssist* assist, IAnjutaIterable* iter)
+{
+	IAnjutaEditorCell* cell = IANJUTA_EDITOR_CELL (iter);
+	IAnjutaEditorAttribute attribute = ianjuta_editor_cell_get_attribute (cell, NULL);
+	return (attribute != IANJUTA_EDITOR_STRING && attribute != IANJUTA_EDITOR_COMMENT);
 }
 
 static void
@@ -836,8 +858,8 @@ cpp_java_assist_populate (IAnjutaProvider* self, IAnjutaIterable* iter, GError**
 	assist->priv->pre_word = NULL;
 
 	ianjuta_iterable_previous (iter, NULL);
-	
-	if (autocomplete)
+
+	if (autocomplete && cpp_java_assist_valid_iter (assist, iter))
 	{
 		/* Check for member completion */
 		IAnjutaIterable* start_iter = NULL;
@@ -931,8 +953,11 @@ cpp_java_assist_activate (IAnjutaProvider* self, IAnjutaIterable* iter, gpointer
 	gboolean add_brace_after_func = FALSE;
 	
 	//DEBUG_PRINT ("assist-chosen: %d", selection);
-	
+		
 	tag = data;	
+	
+	g_return_if_fail (tag != NULL);
+	
 	assistance = g_string_new (tag->name);
 	
 	if (tag->is_func)

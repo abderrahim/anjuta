@@ -36,6 +36,7 @@
 /*#define DEBUG*/
 #include <libanjuta/anjuta-debug.h>
 #include <libanjuta/resources.h>
+#include <libanjuta/anjuta-project.h>
 #include <libanjuta/interfaces/libanjuta-interfaces.h>
 #include <libanjuta/anjuta-utils.h>
 
@@ -205,12 +206,12 @@ get_source_directories (AnjutaPlugin *plugin)
 		{
 			slibs_dirs =
 				ianjuta_project_manager_get_targets (pm,
-					IANJUTA_PROJECT_MANAGER_TARGET_SHAREDLIB,
-												  NULL);
+					ANJUTA_TARGET_SHAREDLIB,
+				    NULL);
 			libs_dirs =
 				ianjuta_project_manager_get_targets (pm,
-					IANJUTA_PROJECT_MANAGER_TARGET_STATICLIB,
-												  NULL);
+					ANJUTA_TARGET_STATICLIB,
+				    NULL);
 		}
 	}
 	slibs_dirs = g_list_reverse (slibs_dirs);

@@ -28,6 +28,56 @@ public enum Anjuta.VcsStatus {
 	IGNORED
 }
 
-[CCode (cheader_filename = "libanjuta/gbf-project.h")]
-public class Gbf.Project : GLib.Object {}
+[CCode (cprefix="ANJUTA_PROJECT_", cheader_filename = "libanjuta/anjuta-project.h")]
+public enum Anjuta.ProjectNodeType
+{
+	UNKNOWN,
+	GROUP,
+	TARGET,
+	SOURCE,
+	VARIABLE
+}
+
+[CCode (cprefix="ANJUTA_TARGET_", cheader_filename = "libanjuta/anjuta-project.h")]
+public enum Anjuta.ProjectTargetClass
+{
+	UNKNOWN,
+	SHAREDLIB,
+	STATICLIB,
+	EXECUTABLE,
+	PYTHON,
+	JAVA,
+	LISP,
+	HEADER,
+	MAN,
+	INFO,
+	GENERIC,
+	DATA,
+	EXTRA,
+	INTLTOOL,
+	CONFIGURE,
+	IDL,
+	MKENUMS,
+	GENMARSHAL
+}
+
+[CCode (cheader_filename = "libanjuta/anjuta-project.h")]
+public class Anjuta.ProjectNode : GLib.Node <void*> {}
+
+[CCode (cheader_filename = "libanjuta/anjuta-project.h")]
+public class Anjuta.ProjectGroup : Anjuta.ProjectNode {}
+
+[CCode (cheader_filename = "libanjuta/anjuta-project.h")]
+public class Anjuta.ProjectTarget : Anjuta.ProjectNode {}
+
+[CCode (cheader_filename = "libanjuta/anjuta-project.h")]
+public class Anjuta.ProjectSource : Anjuta.ProjectNode {}
+
+[CCode (cheader_filename = "libanjuta/anjuta-project.h")]
+public struct Anjuta.ProjectTargetInformation
+{
+	string name;
+	ProjectTargetClass base;
+	string mime_type;
+}
 

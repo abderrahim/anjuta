@@ -119,8 +119,8 @@ void
 display_new_file(AnjutaFileWizardPlugin *plugin,
 				 IAnjutaDocumentManager *docman)
 {
-	IAnjutaProjectManagerCapabilities caps =
-		IANJUTA_PROJECT_MANAGER_CAN_ADD_NONE;
+	IAnjutaProjectCapabilities caps =
+		IANJUTA_PROJECT_CAN_ADD_NONE;
 	
 	if (!nfg)
 		if (!create_new_file_dialog (docman))
@@ -141,7 +141,7 @@ display_new_file(AnjutaFileWizardPlugin *plugin,
 	                  G_CALLBACK(on_add_to_project_toggled),
 	                  nfg);
 	
-	if ((caps & IANJUTA_PROJECT_MANAGER_CAN_ADD_SOURCE) == FALSE) {
+	if ((caps & IANJUTA_PROJECT_CAN_ADD_SOURCE) == FALSE) {
 		gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (nfg->add_to_project),
 									  FALSE);
 		gtk_widget_set_sensitive (nfg->add_to_project, FALSE);
@@ -344,6 +344,8 @@ on_new_file_okbutton_clicked(GtkWidget *window, GdkEvent *event,
 		
 		if (uri_list)
 		{
+			GList* node;
+
 			/* Save main file */
 			file = g_file_new_for_uri ((const gchar *)uri_list->data);
 			ianjuta_file_savable_save_as (IANJUTA_FILE_SAVABLE (te), file, NULL);		
@@ -366,7 +368,6 @@ on_new_file_okbutton_clicked(GtkWidget *window, GdkEvent *event,
 				if (ivcs)
 				{					
 					GList* files = NULL;
-					GList* node;
 					AnjutaAsyncNotify* notify = anjuta_async_notify_new();
 					for (node = uri_list; node != NULL; node = g_list_next (node))
 					{
@@ -376,6 +377,13 @@ on_new_file_okbutton_clicked(GtkWidget *window, GdkEvent *event,
 					g_list_foreach (files, (GFunc) g_object_unref, NULL);
 				}
 			}
+
+			/* Re emit element_added for symbol-db */
+			for (node = uri_list; node != NULL; node = g_list_next (node))
+			{
+				g_signal_emit_by_name (G_OBJECT (pm), "element_added", node->data);
+			}
+
 			g_list_foreach (uri_list, (GFunc)g_free, NULL);
 			g_list_free (uri_list);
 		}
